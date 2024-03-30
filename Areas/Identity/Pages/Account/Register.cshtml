@@ -1,0 +1,170 @@
+﻿﻿
+@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+<div class="row">
+    <div class="col-md-4 mx-auto rounded border p-3 shadow-lg" style="background-color: #f8f9fa;">
+        <br />
+        <h2 class="text-center"><b>InternshipDotCom<b></b></h2>
+        <h4 class="text-center" style="margin-top:21px;"><b>Sign up</b></h4>
+        <br />
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+
+            <div class="row mb-3">
+                <label class="col-sm-4" asp-for="Input.UserName">UserName</label>
+                <div class="col-sm-8">
+                    <input asp-for="Input.UserName" class="form-control" autocomplete="UserName" aria-required="true" placeholder="Nokosha" />
+                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4" asp-for="Input.FirstName">First Name</label>
+                <div class="col-sm-8">
+                    <input asp-for="Input.FirstName" class="form-control" autocomplete="FirstName" aria-required="true" placeholder="Nokosha" />
+                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                </div> 
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4" asp-for="Input.LastName">Last Name </label>
+                <div class="col-sm-8">
+                    <input asp-for="Input.LastName" class="form-control" autocomplete="LastName" aria-required="true" placeholder="Mani" />
+                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <label class="col-sm-4" asp-for="Input.Email">Email</label>
+                <div class="col-sm-8">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="Email" aria-required="true" placeholder="name@example.com" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div> 
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4" asp-for="Input.PhoneNumber">Phone Number</label>
+                <div class="col-sm-8">
+                    <input asp-for="Input.PhoneNumber" class="form-control" autocomplete="PhoneNumber" aria-required="true" placeholder="+251919655423" />
+                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4" asp-for="Input.Address">Address</label>
+                <div class="col-sm-8">
+                    <input asp-for="Input.Address" class="form-control" autocomplete="Address" aria-required="true" placeholder="Addis Ababa" />
+                    <span asp-validation-for="Input.Address" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4" asp-for="Input.Password">Password</label>
+                <div class="col-sm-8 ">
+                    <div class="input-group">
+                        <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" id="passwordInput1" />
+                        <span class="input-group-text" id="togglePassword1">
+                            <i id="togglePasswordIcon1" class="bi bi-eye"></i>
+                        </span>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4" asp-for="Input.ConfirmPassword">Confirm Password</label>
+                <div class="col-sm-8 ">
+                    <div class="input-group">
+                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" id="passwordInput2" />
+                        <span class="input-group-text" id="togglePassword2">
+                            <i id="togglePasswordIcon2" class="bi bi-eye"></i>
+                        </span>
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
+                   
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="Input.InternCoordinater" id="internCoordinaterCheckbox">
+                        <label class="form-check-label" for="internCoordinaterCheckbox">@Html.DisplayNameFor(m => m.Input.InternCoordinater)</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="Input.Organization" id="organizationCheckbox">
+                        <label class="form-check-label" for="organizationCheckbox">@Html.DisplayNameFor(m => m.Input.Organization)</label>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                // Ensure mutual exclusivity for the checkboxes
+                document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+                    checkbox.addEventListener('change', () => {
+                        if (checkbox.checked) {
+                            document.querySelectorAll('input[type="checkbox"]').forEach((otherCheckbox) => {
+                                if (otherCheckbox !== checkbox) {
+                                    otherCheckbox.checked = false;
+                                }
+                            });
+                        }
+                    });
+                });
+
+                    document.getElementById("togglePassword1").addEventListener("click", function () {
+                        const passwordInput1 = document.getElementById('passwordInput1');
+                        const icon1 = document.getElementById("togglePasswordIcon1");
+
+                        if (passwordInput1.type === "password") {
+                            passwordInput1.type = "text";
+                            icon1.classList.remove("bi-eye");
+                            icon1.classList.add("bi-eye-slash");
+                        } else {
+                            passwordInput1.type = "password";
+                            icon1.classList.remove("bi-eye-slash");
+                            icon1.classList.add("bi-eye");
+                        }
+                    });
+
+                document.getElementById("togglePassword2").addEventListener("click", function () {
+                    const passwordInput2 = document.getElementById('passwordInput2');
+                    const icon2 = document.getElementById("togglePasswordIcon2");
+
+                    if (passwordInput2.type === "password") {
+                        passwordInput2.type = "text";
+                        icon2.classList.remove("bi-eye");
+                        icon2.classList.add("bi-eye-slash");
+                    } else {
+                        passwordInput2.type = "password";
+                        icon2.classList.remove("bi-eye-slash");
+                        icon2.classList.add("bi-eye");
+                    }
+                });
+ 
+            </script>
+
+
+
+            <br />
+                <button id="registerSubmit" type="submit" class="m-2 btn btn-primary w-100" >Register</button>
+            <div class="text-center">
+                Already have an account? <a asp-area="Identity" asp-page="/Account/Login">Login</a>
+            </div>
+        </form>
+    </div>
+   
+</div>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+}
