@@ -1,0 +1,27 @@
+﻿@model ApplicationUser
+@{
+    ViewData["Title"] = "Delete User";
+}
+
+
+
+<div class=" card col-md-6 mx-auto rounded border p-3 " style="background-color: #ffcccc;">
+    <br />
+    <h2 class="text-center "><b>Delete User</b></h2>
+    <br />
+    <hr />
+    <div class="card-body">
+        <p>Are you sure you want to delete the user <strong>@Model.UserName</strong>?</p>
+
+        <form asp-action="DeleteAction" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <button type="submit" class="btn btn-danger col-sm-3">Delete</button>
+                <div class="col-sm-2"></div>
+                <a asp-action="Index" class="btn btn-secondary col-sm-3">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -294,3 +294,4 @@ C:\Program Files\installed apps\Linux comanned\crzylearning\DotNet Apps\Internsh
 C:\Program Files\installed apps\Linux comanned\crzylearning\DotNet Apps\InternshipDotCom\bin\Debug\net8.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Program Files\installed apps\Linux comanned\crzylearning\DotNet Apps\InternshipDotCom\bin\Debug\net8.0\runtimes\win-x86\native\e_sqlite3.dll
 C:\Program Files\installed apps\Linux comanned\crzylearning\DotNet Apps\InternshipDotCom\obj\Debug\net8.0\InternshipDotCom.MvcApplicationPartsAssemblyInfo.cs
+C:\Program Files\installed apps\Linux comanned\crzylearning\DotNet Apps\InternshipDotCom\obj\Debug\net8.0\InternshipDotCom.sourcelink.json

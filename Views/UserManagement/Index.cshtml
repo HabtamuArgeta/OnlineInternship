@@ -1,0 +1,91 @@
+﻿@model IEnumerable<ApplicationUser>
+@{
+    ViewData["Title"] = "User Management";
+}
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<ApplicationUser> _userManager;
+
+@{
+    var pendingUsers = await _userManager.GetUsersInRoleAsync("Pending");
+    int numberOfPendingUsers = pendingUsers.Count;
+}
+
+<div class="row">
+    <h1 class="col-sm-6">@ViewData["Title"]</h1>
+    <h1 class="col-sm-6">
+        <span class="badge bg-warning rounded-pill">@numberOfPendingUsers</span> users need approval.
+    </h1>
+</div>
+
+<br />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>First Name</th>
+            <th>Email</th>
+            <th>Registered As</th>
+            <th>Approved</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            if ((string.Join(", ", await _userManager.GetRolesAsync(user))) == "InternshipCordinator" || (string.Join(", ", await _userManager.GetRolesAsync(user))) == "organization" || (string.Join(", ", await _userManager.GetRolesAsync(user))) == "applicant" || (string.Join(", ", await _userManager.GetRolesAsync(user))) == "Pending")
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                <td>@user.FristName</td>
+                <td>@user.Email</td>
+                <td> @user.RegisteredAs</td>
+                    @if ((string.Join(", ", await _userManager.GetRolesAsync(user))) == "applicant")
+                    {
+                        <td>
+                            <input type="checkbox" id="@("approveCheckbox_" + user.Id)" checked disabled />
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <input type="checkbox" id="@("approveCheckbox_" + user.Id)" @(user.Approved ? "checked" : "") onchange="approveUser('@user.Id', this.checked)" />
+                        </td>
+                    }
+                    
+                <td>
+                    <div class="btn-group" role="group" aria-label="User Actions">
+                        <a href="@Url.Action("Details", new { id = user.Id })" class="btn btn-sm btn-info">Details</a>
+                        <a href="@Url.Action("Edit", new { id = user.Id })" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="@Url.Action("Delete", new { id = user.Id })" class="btn btn-sm btn-danger">Delete</a>
+                    </div>
+                </td>
+            </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script type="text/javascript">
+    function approveUser(userId, approved) {
+        $.ajax({
+            type: "POST",
+            url: "/UserManagement/ApproveUser",
+            data: { userId: userId, approved: approved },
+            success: function (response) {
+                consol.log("User approval status updated successfully.");
+            },
+            failure: function (xhr, status, error) {
+                consol.log(error);
+            },
+            error: function (xhr, status, error) {
+                consol.log(error);
+            }
+        });
+    }
+</script>
+
+

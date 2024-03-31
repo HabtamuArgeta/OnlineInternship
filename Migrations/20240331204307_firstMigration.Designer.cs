@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InternshipDotCom.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240330190524_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20240331204307_firstMigration")]
+    partial class firstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -85,6 +85,10 @@ namespace InternshipDotCom.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("RegisteredAs")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -137,27 +141,33 @@ namespace InternshipDotCom.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ee7d065d-1429-413c-bca7-26a1bb8f0aaa",
+                            Id = "12d749b8-7cfb-4c6e-a344-c434bed751b0",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "83b7e0f5-ccdb-4717-a187-952bb4ef6803",
+                            Id = "e49144bd-695e-47ea-b4fa-9d4794f441d8",
                             Name = "applicant",
                             NormalizedName = "applicant"
                         },
                         new
                         {
-                            Id = "25e99d27-adb2-4019-9151-17db60aefa79",
+                            Id = "dd053b3e-bdb5-4275-9257-44b5fc88876b",
                             Name = "InternshipCordinator",
                             NormalizedName = "InternshipCordinator"
                         },
                         new
                         {
-                            Id = "bb3a8d73-07c3-4235-a6f7-2c0abceb6d3e",
+                            Id = "c8ec2b12-a252-4320-964e-11c2eff36ead",
                             Name = "organization",
                             NormalizedName = "organization"
+                        },
+                        new
+                        {
+                            Id = "025d7d6c-541a-44d1-a066-036dc1b740bf",
+                            Name = "Pending",
+                            NormalizedName = "Pending"
                         });
                 });
 
@@ -214,10 +224,12 @@ namespace InternshipDotCom.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -254,10 +266,12 @@ namespace InternshipDotCom.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");

@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using System.Net;
 
 namespace InternshipDotCom.Areas.Identity.Pages.Account
 {
@@ -139,38 +140,50 @@ namespace InternshipDotCom.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser()
+                   var user = new ApplicationUser();
+
+                    user.FristName = Input.FirstName;
+                    user.LastName = Input.LastName;
+                    user.UserName = Input.UserName;
+                    user.Email = Input.Email;
+                    user.PhoneNumber = Input.PhoneNumber;
+                    user.Address = Input.Address;
+                    user.CreatedAt = DateTime.Now;
+                    user.Approved = false;
+                 if (Input.InternCoordinater)
+                   {
+                     user.RegisteredAs = "InternshipCordinator";
+                   }
+
+                else if (Input.Organization)
                 {
+                    user.RegisteredAs = "organization";
+                }
+                 else
+                {
+                    user.RegisteredAs = "applicant";
+                }
 
-                    FristName = Input.FirstName,
-                    LastName = Input.LastName,
-                    UserName = Input.UserName,
-                    Email = Input.Email,
-                    PhoneNumber = Input.PhoneNumber,
-                    Address = Input.Address,
-                    CreatedAt = DateTime.Now,
-                    Approved = false,
 
-                };
 
-                
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                    if (Input.InternCoordinater)
-                    {
-                        await _userManager.AddToRoleAsync(user, "InternshipCordinator");
-                    }
-                    else if (Input.Organization)
-                    {
-                        await _userManager.AddToRoleAsync(user, "organization");
-                    }
-                    else
+
+
+                    if ( !Input.InternCoordinater && !Input.Organization)
                     {
                         await _userManager.AddToRoleAsync(user, "applicant");
                     }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, "Pending");
+                    }
+                    
+                    
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

@@ -1,0 +1,39 @@
+﻿@model ApplicationUser
+@{
+    ViewData["Title"] = "User Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-2">User Name</dt>
+            <dd class="col-sm-10">@Model.UserName</dd>
+
+            <dt class="col-sm-2">First Name</dt>
+            <dd class="col-sm-10">@Model.FristName</dd>
+
+            <dt class="col-sm-2">Last Name</dt>
+            <dd class="col-sm-10">@Model.LastName</dd>
+
+            <dt class="col-sm-2">Email</dt>
+            <dd class="col-sm-10">@Model.Email</dd>
+
+            <dt class="col-sm-2">Phone Number</dt>
+            <dd class="col-sm-10">@Model.PhoneNumber</dd>
+
+            <dt class="col-sm-2">Address</dt>
+            <dd class="col-sm-10">@Model.Address</dd>
+
+            <dt class="col-sm-2">Created At</dt>
+            <dd class="col-sm-10">@Model.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</dd>
+
+            
+        </dl>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-primary">Back to Users</a>
+</div>

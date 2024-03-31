@@ -27,7 +27,10 @@ namespace InternshipDotCom.Servieces
             var organization = new IdentityRole("organization");
             organization.NormalizedName = "organization";
 
-            builder.Entity<IdentityRole>().HasData(admin, applicant, InternshipCordinator, organization);
+            var Pending = new IdentityRole("Pending");
+            Pending.NormalizedName = "Pending";
+
+            builder.Entity<IdentityRole>().HasData(admin, applicant, InternshipCordinator, organization, Pending);
         }
     }
 }

@@ -1,0 +1,60 @@
+﻿@model ApplicationUser
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+
+<form asp-action="Edit" method="post">
+    <div class=" card col-md-6 mx-auto rounded border p-3 " style="background-color: #f8f9fa;" >
+        <br />
+        <h2 class="text-center "><b>Edit User</b></h2>
+        <br />
+        <hr />
+        <div class="card-body">
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label">User Name</label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FristName" class="control-label">First Name</label>
+                <input asp-for="FristName" class="form-control" />
+                <span asp-validation-for="FristName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label">Last Name</label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">Email</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label">Phone Number</label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <label asp-for="Address" class="control-label">Address</label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <button type="submit" class="btn btn-primary col-sm-3">Save</button>
+            <div class="col-sm-2"></div>
+            <a asp-action="Index" class="btn btn-secondary col-sm-3">Cancel</a>
+        </div>
+        
+    </div>
+
+
+
+   
+</form>

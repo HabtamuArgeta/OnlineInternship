@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace InternshipDotCom.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigration : Migration
+    public partial class firstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,6 +36,7 @@ namespace InternshipDotCom.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RegisteredAs = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Approved = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -103,8 +104,8 @@ namespace InternshipDotCom.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -148,8 +149,8 @@ namespace InternshipDotCom.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -168,10 +169,11 @@ namespace InternshipDotCom.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "25e99d27-adb2-4019-9151-17db60aefa79", null, "InternshipCordinator", "InternshipCordinator" },
-                    { "83b7e0f5-ccdb-4717-a187-952bb4ef6803", null, "applicant", "applicant" },
-                    { "bb3a8d73-07c3-4235-a6f7-2c0abceb6d3e", null, "organization", "organization" },
-                    { "ee7d065d-1429-413c-bca7-26a1bb8f0aaa", null, "admin", "admin" }
+                    { "025d7d6c-541a-44d1-a066-036dc1b740bf", null, "Pending", "Pending" },
+                    { "12d749b8-7cfb-4c6e-a344-c434bed751b0", null, "admin", "admin" },
+                    { "c8ec2b12-a252-4320-964e-11c2eff36ead", null, "organization", "organization" },
+                    { "dd053b3e-bdb5-4275-9257-44b5fc88876b", null, "InternshipCordinator", "InternshipCordinator" },
+                    { "e49144bd-695e-47ea-b4fa-9d4794f441d8", null, "applicant", "applicant" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -12,6 +12,8 @@ namespace InternshipDotCom.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
+        public string RegisteredAs { get; set; } = string.Empty;
+
         public bool Approved { get; set; } = false;
     }
 }
