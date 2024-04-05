@@ -182,8 +182,7 @@ namespace InternshipDotCom.Areas.Identity.Pages.Account
                     {
                         await _userManager.AddToRoleAsync(user, "Pending");
                     }
-                    
-                    
+
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -204,6 +203,19 @@ namespace InternshipDotCom.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
+                        var roles = await _userManager.GetRolesAsync(user);
+
+                        if (roles.Contains("applicant"))
+                        {
+                            // Redirect to the applicant dashboard
+                            return RedirectToAction("Index", "Internships");
+                        }
+
+                        else if (roles.Contains("Pending"))
+                        {
+                            // Redirect to the applicant dashboard
+                            return RedirectToAction("Index", "Home");
+                        }
                         return LocalRedirect(returnUrl);
                     }
                 }
@@ -211,6 +223,7 @@ namespace InternshipDotCom.Areas.Identity.Pages.Account
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
+                
             }
 
             // If we got this far, something failed, redisplay form

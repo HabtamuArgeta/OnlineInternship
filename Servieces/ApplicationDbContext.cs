@@ -32,5 +32,7 @@ namespace InternshipDotCom.Servieces
 
             builder.Entity<IdentityRole>().HasData(admin, applicant, InternshipCordinator, organization, Pending);
         }
+        public DbSet<InternshipDotCom.Models.Internship> Internship { get; set; } = default!;
+        public DbSet<InternshipDotCom.Models.Organization> Organization { get; set; } = default!;
     }
 }

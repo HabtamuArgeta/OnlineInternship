@@ -1,0 +1,55 @@
+﻿@model IEnumerable<InternshipDotCom.Models.Organization>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrganizationName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var organization in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => organization.OrganizationName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => organization.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => organization.Description)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@organization.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@organization.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@organization.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

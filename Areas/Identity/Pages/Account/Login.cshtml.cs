@@ -23,10 +23,13 @@ namespace InternshipDotCom.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager) // Add UserManager parameter
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager; 
         }
 
         /// <summary>
@@ -116,7 +119,47 @@ namespace InternshipDotCom.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+
+
+                    var user = await _userManager.FindByNameAsync(Input.UserName);
+                    if (user != null)
+                    {
+                        // Get the roles assigned to the user
+                        var roles = await _userManager.GetRolesAsync(user);
+
+                        // Check if the user has a specific role
+                        if (roles.Contains("admin"))
+                        {
+                            // Redirect to the admin dashboard
+                            return RedirectToAction("Index", "UserManagement");
+                        }
+                        else if (roles.Contains("InternshipCordinator"))
+                        {
+                            // Redirect to the organization dashboard
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else if (roles.Contains("applicant"))
+                        {
+                            // Redirect to the applicant dashboard
+                            return RedirectToAction("Index", "Home");
+                        }
+
+                        else if (roles.Contains("organization"))
+                        {
+                            // Redirect to the applicant dashboard
+                            return RedirectToAction("Index", "Internships");
+                        }
+
+                        else if (roles.Contains("Pending"))
+                        {
+                            // Redirect to the applicant dashboard
+                            return RedirectToAction("Index", "Home");
+                        }
+
+                        // If the user does not have any specific role, redirect to the default URL
+                        return LocalRedirect(returnUrl);
+                    }
+                   
                 }
                 if (result.RequiresTwoFactor)
                 {
