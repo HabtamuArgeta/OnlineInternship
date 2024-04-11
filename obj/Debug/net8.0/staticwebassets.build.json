@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "UNWRNsJWDCJwrvY9cejgCT3zEiYR+EHQTP4Pkw2ZIkU=",
+  "Hash": "d6DFALscNzVav71Z57icsZrFDEIZRxoKKVgn8kk/tn4=",
   "Source": "InternshipDotCom",
   "BasePath": "_content/InternshipDotCom",
   "Mode": "Default",
@@ -91,6 +91,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Program Files\\installed apps\\Linux comanned\\crzylearning\\DotNet Apps\\InternshipDotCom\\wwwroot\\Images\\ImageNotUploaded.jpeg",
+      "SourceId": "InternshipDotCom",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Program Files\\installed apps\\Linux comanned\\crzylearning\\DotNet Apps\\InternshipDotCom\\wwwroot\\",
+      "BasePath": "_content/InternshipDotCom",
+      "RelativePath": "Images/ImageNotUploaded.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\ImageNotUploaded.jpeg"
     },
     {
       "Identity": "C:\\Program Files\\installed apps\\Linux comanned\\crzylearning\\DotNet Apps\\InternshipDotCom\\wwwroot\\js\\site.js",

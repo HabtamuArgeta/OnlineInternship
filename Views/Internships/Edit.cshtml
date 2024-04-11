@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -22,11 +22,6 @@
                 <label asp-for="InternshipType" class="control-label"></label>
                 <input asp-for="InternshipType" class="form-control" />
                 <span asp-validation-for="InternshipType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PostedAt" class="control-label"></label>
-                <input asp-for="PostedAt" class="form-control" />
-                <span asp-validation-for="PostedAt" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NumberOfApplicant" class="control-label"></label>
@@ -44,9 +39,13 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="OrganizationId" class="control-label"></label>
-                <select asp-for="OrganizationId" class="form-control" asp-items="ViewBag.OrganizationId"></select>
-                <span asp-validation-for="OrganizationId" class="text-danger"></span>
+                <label asp-for="OrganizationId" class="control-label">Organization</label>
+                <select asp-for="OrganizationId" class="form-control" asp-items="ViewBag.OrganizationId">
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" class="form-control" id="formFile">
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -60,5 +59,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

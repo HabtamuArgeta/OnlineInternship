@@ -80,7 +80,7 @@ namespace InternshipDotCom.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             
-            return View(organization);
+            
         }
 
 
@@ -106,16 +106,16 @@ namespace InternshipDotCom.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,OrganizationName,Address,Description,ApplicationUserId")] Organization organization)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,OrganizationName,Address,Description")] Organization organization)
         {
             if (id != organization.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
+            organization.ApplicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            try
                 {
                     _context.Update(organization);
                     await _context.SaveChangesAsync();
@@ -132,9 +132,6 @@ namespace InternshipDotCom.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "Id", organization.ApplicationUserId);
-            return View(organization);
         }
 
         // GET: Organizations/Delete/5

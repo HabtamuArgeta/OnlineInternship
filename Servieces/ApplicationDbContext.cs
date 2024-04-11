@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace InternshipDotCom.Servieces
 {
@@ -31,8 +32,16 @@ namespace InternshipDotCom.Servieces
             Pending.NormalizedName = "Pending";
 
             builder.Entity<IdentityRole>().HasData(admin, applicant, InternshipCordinator, organization, Pending);
+
         }
         public DbSet<InternshipDotCom.Models.Internship> Internship { get; set; } = default!;
         public DbSet<InternshipDotCom.Models.Organization> Organization { get; set; } = default!;
+        public DbSet<InternshipDotCom.Models.Applicant> Applicant { get; set; } = default!;
+
+        public DbSet<InternshipDotCom.Models.ApplicantInternship> ApplicantInternship { get; set; } = default!;
+
+
+
+
     }
 }

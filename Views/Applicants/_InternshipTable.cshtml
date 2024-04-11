@@ -1,0 +1,28 @@
+﻿@model IEnumerable<InternshipDotCom.Models.Internship>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.InternshipName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InternshipType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostedAt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfApplicant)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Organization.OrganizationName)
+        </td>
+    </tr>
+}

@@ -21,8 +21,6 @@ namespace InternshipDotCom.Models
 
         [Required(ErrorMessage = "Please Enter Address")]
         public string Address { get; set; }
-
-
         
 
         [Required(ErrorMessage = "Description is required")]
@@ -31,8 +29,17 @@ namespace InternshipDotCom.Models
 
         [RegularExpression("^[1-9]*$", ErrorMessage = "Select organization")]
         public int OrganizationId { get; set; } 
-        public Organization Organization { get; set; } // Navigation property
+        public Organization Organization { get; set; }
 
-        public ICollection<Application> Applications { get; set; }
+
+        [Display(Name = "Image File")]
+        [NotMapped]
+        public IFormFile? Image { get; set; }
+        public string? ImagePath { get; set; }
+
+
+        public ICollection<ApplicantInternship> ApplicantInternship { get; set; } 
+
+
     }
 }

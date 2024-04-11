@@ -1,0 +1,101 @@
+﻿@model IEnumerable<InternshipDotCom.Models.Internship>
+
+@{
+    ViewData["Title"] = "Internships";
+}
+
+<h1>All Internships</h1>
+
+<p>
+    Filter by organization:
+    <select id="organizationFilter">
+        <option value="">All</option>
+        @foreach (var organization in ViewBag.Organizations)
+        {
+            <option value="@organization.Id">@organization.OrganizationName</option>
+        }
+    </select>
+    <button onclick="applyFilter()">Apply Filter</button>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.InternshipName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InternshipType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfApplicant)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                Organization
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="internshipTableBody">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InternshipName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InternshipType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PostedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfApplicant)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Organization.OrganizationName)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function applyFilter() {
+            var selectedOrganizationId = document.getElementById('organizationFilter').value;
+
+            // Make an AJAX call to the Index action with the selected organization ID
+            $.ajax({
+                url: '@Url.Action("Filter", "Applicants")',
+                type: 'GET',
+                data: { organizationId: selectedOrganizationId },
+                success: function (result) {
+                    // Replace the HTML content of the table body with the updated internship data
+                    $('#internshipTableBody').html(result);
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+    </script>
+}

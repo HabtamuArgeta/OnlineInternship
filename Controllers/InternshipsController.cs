@@ -20,12 +20,15 @@ namespace InternshipDotCom.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public InternshipsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public InternshipsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
 
             _userManager = userManager;
+
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Internships
@@ -152,9 +155,28 @@ namespace InternshipDotCom.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "organization")]
 
-        public async Task<IActionResult> Create([Bind("Id,InternshipName,InternshipType,PostedAt,NumberOfApplicant,Address,Description,OrganizationId")] Internship internship)
+        public async Task<IActionResult> Create([Bind("Id,InternshipName,InternshipType,NumberOfApplicant,Address,Description,OrganizationId,Image")] Internship internship)
         {
-            
+            if (internship.Image != null)
+
+            {
+                string AbsolutePath = "C:\\Program Files\\installed apps\\Linux comanned\\crzylearning\\DotNet Apps\\InternshipDotCom\\wwwroot";
+                string RelativePath = "/Images/Internships/";
+                RelativePath += Guid.NewGuid().ToString() + "_" + internship.Image.FileName;
+                AbsolutePath += RelativePath;
+                internship.ImagePath = RelativePath;
+
+                string ServerFolder = Path.Combine(_webHostEnvironment.WebRootPath, AbsolutePath);
+
+                await internship.Image.CopyToAsync(new FileStream(ServerFolder, FileMode.Create));
+
+            }
+            else
+            {
+                internship.ImagePath = "/Images/ImageNotUploaded.jpeg";
+            }
+
+             internship.PostedAt = DateTime.Now;
                 _context.Add(internship);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -176,9 +198,27 @@ namespace InternshipDotCom.Controllers
             {
                 return NotFound();
             }
-            ViewData["OrganizationId"] = new SelectList(_context.Set<Organization>(), "Id", "Id", internship.OrganizationId);
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Retrieve organization IDs owned by the current user
+            var userOrganizations = await _context.Organization
+                .Where(o => o.ApplicationUserId == userId)
+                .ToListAsync();
+
+            if (userOrganizations == null)
+            {
+                // Handle case where user doesn't have an organization
+                return RedirectToAction("Create", "Organizations");
+            }
+
+            // Populate the dropdown list with user's organizations
+            ViewData["OrganizationId"] = new SelectList(userOrganizations, "Id", "OrganizationName", internship.OrganizationId);
+
             return View(internship);
         }
+
+
 
         // POST: Internships/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -187,16 +227,40 @@ namespace InternshipDotCom.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "organization")]
 
-        public async Task<IActionResult> Edit(int id, [Bind("Id,InternshipName,InternshipType,PostedAt,NumberOfApplicant,Address,Description,OrganizationId")] Internship internship)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,InternshipName,InternshipType,NumberOfApplicant,Address,Description,OrganizationId,Image")] Internship internship)
         {
             if (id != internship.Id)
             {
                 return NotFound();
             }
+            if (internship.Image != null)
 
-            if (ModelState.IsValid)
             {
-                try
+                string AbsolutePath = "C:\\Program Files\\installed apps\\Linux comanned\\crzylearning\\DotNet Apps\\InternshipDotCom\\wwwroot";
+                string RelativePath = "/Images/Internships/";
+                RelativePath += Guid.NewGuid().ToString() + "_" + internship.Image.FileName;
+                AbsolutePath += RelativePath;
+                internship.ImagePath = RelativePath;
+
+                string ServerFolder = Path.Combine(_webHostEnvironment.WebRootPath, AbsolutePath);
+
+                await internship.Image.CopyToAsync(new FileStream(ServerFolder, FileMode.Create));
+
+            }
+            else
+            {
+                var existingInternship = _context.Internship.AsNoTracking().FirstOrDefault(b => b.Id == internship.Id);
+
+                if (existingInternship != null)
+                {
+                    internship.ImagePath = existingInternship.ImagePath;
+                }
+                else
+                {
+                    internship.ImagePath = "/default-image-path.jpg";
+                }
+            }
+            try
                 {
                     _context.Update(internship);
                     await _context.SaveChangesAsync();
@@ -213,9 +277,8 @@ namespace InternshipDotCom.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["OrganizationId"] = new SelectList(_context.Set<Organization>(), "Id", "Id", internship.OrganizationId);
-            return View(internship);
+            
+           
         }
 
         // GET: Internships/Delete/5

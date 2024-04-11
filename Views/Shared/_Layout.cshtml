@@ -23,6 +23,7 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+ 
                         </li>
                             @if (User.IsInRole("organization"))
                             {
@@ -33,6 +34,21 @@
 
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Organizations" asp-action="Index">Company</a>
+                                </li>
+                            }
+                            @if (User.IsInRole("applicant"))
+                            {
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Applicants" asp-action="PostedInternship">Internships</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Applicants" asp-action="RegisterForInternship">Registerd</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Applicants" asp-action="SaveForFuture">Saved</a>
                                 </li>
                             }
                         </ul>

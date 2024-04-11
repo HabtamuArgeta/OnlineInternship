@@ -141,7 +141,7 @@ namespace InternshipDotCom.Areas.Identity.Pages.Account
                         else if (roles.Contains("applicant"))
                         {
                             // Redirect to the applicant dashboard
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("PostedInternship", "Applicants");
                         }
 
                         else if (roles.Contains("organization"))
