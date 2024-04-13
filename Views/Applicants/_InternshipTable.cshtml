@@ -1,28 +1,28 @@
 ﻿@model IEnumerable<InternshipDotCom.Models.Internship>
 
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.InternshipName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.InternshipType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PostedAt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NumberOfApplicant)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Organization.OrganizationName)
-        </td>
-    </tr>
-}
+
+
+<div class="row ">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4 mb-4">
+            <div class="internship-card shadow-sm">
+                <img src="@Html.DisplayFor(modelItem => item.ImagePath)" class="card-img-top" alt="Internship Image">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.InternshipName)</h5>
+                    <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+                    <p class="card-text">Posted by: @Html.DisplayFor(modelItem => item.Organization.OrganizationName)</p>
+                    <div class="row">
+                        <div class="btn-group col-sm-8">
+                            <button type="button" class="btn btn-sm btn-outline-primary" onclick="applyForInternship(@item.Id)">Apply</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="saveInternship(@item.Id)">Save</button>
+                            <a class="btn btn-sm btn-outline-info" asp-controller="Applicants" asp-action="InternshipDetails" asp-route-id="@item.Id">Details</a>
+                        </div>
+
+                        <small class="text-muted col-sm-4">@Html.DisplayFor(modelItem => item.PostedAt)</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

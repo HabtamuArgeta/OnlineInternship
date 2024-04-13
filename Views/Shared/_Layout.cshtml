@@ -23,7 +23,6 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
- 
                         </li>
                             @if (User.IsInRole("organization"))
                             {
@@ -44,11 +43,11 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Applicants" asp-action="RegisterForInternship">Registerd</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Applicants" asp-action="AppliedInternships">Registerd</a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Applicants" asp-action="SaveForFuture">Saved</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Applicants" asp-action="SavedInternships">Saved</a>
                                 </li>
                             }
                         </ul>

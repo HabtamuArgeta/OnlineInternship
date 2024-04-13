@@ -69,7 +69,7 @@ namespace InternshipDotCom.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ApplicantId")
+                    b.Property<int?>("ApplicantId")
                         .HasColumnType("int");
 
                     b.Property<int>("InternshipId")
@@ -281,31 +281,31 @@ namespace InternshipDotCom.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9ba566da-09ec-406f-8f61-ad8777d83127",
+                            Id = "b7da08c0-86ec-477f-816a-ed5d39dbaa98",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "b9a6fd74-eccc-4d68-af43-237b4c6b6308",
+                            Id = "9e983d3e-c15d-4232-bc16-277eff0ce964",
                             Name = "applicant",
                             NormalizedName = "applicant"
                         },
                         new
                         {
-                            Id = "6bc6b0cc-a815-4dfa-89b6-bf827ca26a11",
+                            Id = "560e02bd-1bdb-4264-869c-3454c96e7680",
                             Name = "InternshipCordinator",
                             NormalizedName = "InternshipCordinator"
                         },
                         new
                         {
-                            Id = "63af03ef-cfac-4b2c-873e-b9de18c0b770",
+                            Id = "81c190fd-38b1-48bd-bf40-b6513d21707d",
                             Name = "organization",
                             NormalizedName = "organization"
                         },
                         new
                         {
-                            Id = "16d27e83-3b6e-4cab-a04b-73971ed21db9",
+                            Id = "cd67d42d-31b2-45ee-a737-23a339153702",
                             Name = "Pending",
                             NormalizedName = "Pending"
                         });
@@ -436,9 +436,7 @@ namespace InternshipDotCom.Migrations
                 {
                     b.HasOne("InternshipDotCom.Models.Applicant", "Applicant")
                         .WithMany("ApplicantInternship")
-                        .HasForeignKey("ApplicantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ApplicantId");
 
                     b.HasOne("InternshipDotCom.Models.Internship", "Internship")
                         .WithMany("ApplicantInternship")

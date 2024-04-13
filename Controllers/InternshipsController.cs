@@ -65,7 +65,7 @@ namespace InternshipDotCom.Controllers
         [Authorize(Roles = "admin,applicant,InternshipCordinator,organization")]
         public async Task<IActionResult>  Filter(int? organizationId)
         {
-            // Retrieve organization IDs owned by the current user
+            
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userOrganizationIds = await _context.Organization
                 .Where(o => o.ApplicationUserId == userId)
@@ -82,18 +82,18 @@ namespace InternshipDotCom.Controllers
                 internships = internships.Where(i => i.OrganizationId == organizationId);
             }
 
-            // Pass the list of organization IDs to the view
+           
             ViewBag.OrganizationIds = userOrganizationIds;
 
-            // Retrieve the organizations owned by the user
+           
             var userOrganizations = await _context.Organization
                 .Where(o => userOrganizationIds.Contains(o.Id))
                 .ToListAsync();
 
-            // Pass the list of organizations to the view
+            
             ViewBag.Organizations = userOrganizations;
 
-            // Return a partial view with the filtered internships
+            
             return PartialView("_InternshipTable", await internships.ToListAsync());
         }
 
@@ -128,18 +128,18 @@ namespace InternshipDotCom.Controllers
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            // Retrieve organization IDs owned by the current user
+            
             var userOrganizations = await _context.Organization
                 .Where(o => o.ApplicationUserId == userId)
                 .ToListAsync();
 
             if (userOrganizations == null)
             {
-                // Handle case where user doesn't have an organization
+                
                 return RedirectToAction("Create", "Organizations");
             }
 
-            // Populate the dropdown list with user's organizations
+            
             ViewData["OrganizationId"] = new SelectList(userOrganizations, "Id", "OrganizationName");
 
             return View();

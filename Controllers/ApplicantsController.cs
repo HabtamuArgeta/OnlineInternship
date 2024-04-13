@@ -48,6 +48,72 @@ namespace InternshipDotCom.Controllers
 
         }
 
+
+        public async Task<IActionResult> AppliedInternships()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var applicant = await _context.Applicant.FirstOrDefaultAsync(a => a.ApplicationUserId == userId);
+
+            if (applicant == null)
+            {
+                return View("SaveOrApplyInternships");
+            }
+            var appliedOrganizations = await _context.ApplicantInternship
+                .Where(ai => ai.ApplicantId == applicant.Id && ai.IsApplied)
+                .Select(ai => ai.Internship.Organization)
+                .Distinct()
+                .ToListAsync();
+
+            ViewBag.Organizations = appliedOrganizations;
+
+            var appliedInternships = await _context.ApplicantInternship
+                .Include(ai => ai.Internship)
+                    .ThenInclude(i => i.Organization)
+                .Where(ai => ai.Applicant.ApplicationUserId == userId && ai.IsApplied)
+                .Select(ai => ai.Internship)
+                .ToListAsync();
+
+            if (appliedInternships.Count == 0)
+            {
+                return View("SaveOrApplyInternships");
+            }
+            ViewBag.AllInternships = appliedInternships;
+            return View(appliedInternships);
+        }
+
+        public async Task<IActionResult> SavedInternships()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var applicant = await _context.Applicant.FirstOrDefaultAsync(a => a.ApplicationUserId == userId);
+
+            if (applicant == null)
+            {
+                return View("SaveOrApplyInternships");
+            }
+
+            var savedOrganizations = await _context.ApplicantInternship
+                .Where(ai => ai.ApplicantId == applicant.Id && ai.IsSaved)
+                .Select(ai => ai.Internship.Organization)
+                .Distinct()
+                .ToListAsync();
+
+            ViewBag.Organizations = savedOrganizations;
+
+            var savedInternships = await _context.ApplicantInternship
+                .Include(ai => ai.Internship)
+                .ThenInclude(i => i.Organization)
+                .Where(ai => ai.Applicant.ApplicationUserId == userId && ai.IsSaved)
+                .Select(ai => ai.Internship)
+                .ToListAsync();
+            if (savedInternships.Count == 0)
+            {
+                return View("SaveOrApplyInternships");
+            }
+            ViewBag.AllInternships = savedInternships;
+            return View(savedInternships);
+        }
+
+
         public async Task<IActionResult> Filter(int? organizationId)
         {
             
@@ -75,64 +141,83 @@ namespace InternshipDotCom.Controllers
 
         }
 
-        public async Task<IActionResult> RegisterForInternship(int internshipId)
+        public async Task<IActionResult> RegisterForInternship(int id)
         {
-            var internship = await _context.Internship.FindAsync(internshipId);
 
-            if (internship == null)
-            {
-                return NotFound();
-            }
+            var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var applicantId  = User.FindFirstValue(ClaimTypes.NameIdentifier); 
 
-            var applicant = await _context.Applicant.FindAsync(applicantId);
+            var applicant = await _context.Applicant.FirstOrDefaultAsync(a => a.ApplicationUserId == applicationUserId);
+
             if (applicant == null)
             {
-                return NotFound();
+
+                return RedirectToAction("Create");
             }
 
-            //var application = new InternshipApplication
-            //{
-            //    //ApplicantId = applicantId,
-            //    InternshipId = internshipId,
-            //    IsSaved = false ,
-            //    IsRegisterd = true
-            //};
 
-            //_context.InternshipApplication.Add(application);
-            //await _context.SaveChangesAsync();
+            bool isApplied = await _context.ApplicantInternship.AnyAsync(ai => ai.ApplicantId == applicant.Id && ai.InternshipId == id && ai.IsApplied);
 
-            return RedirectToAction(nameof(Index));
+            if (isApplied)
+            {
+
+                return RedirectToAction("PostedInternship");
+            }
+
+
+            var applicantInternship = new ApplicantInternship
+            {
+                ApplicantId = applicant.Id,
+                InternshipId = id,
+                IsApplied = true
+            };
+
+
+            _context.ApplicantInternship.Add(applicantInternship);
+            await _context.SaveChangesAsync();
+
+
+            return RedirectToAction("PostedInternship");
         }
 
-        public async Task<IActionResult> SaveForFuture(int internshipId)
-        {
-            var internship = await _context.Internship.FindAsync(internshipId);
-            if (internship == null)
-            {
-                return NotFound();
-            }
 
-            var applicantId = User.FindFirstValue(ClaimTypes.NameIdentifier); 
-            var applicant = await _context.Applicant.FindAsync(applicantId);
+        public async Task<IActionResult> SaveInternshipForFuture(int id)
+        {
+
+            var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+
+            var applicant = await _context.Applicant.FirstOrDefaultAsync(a => a.ApplicationUserId == applicationUserId);
+
             if (applicant == null)
             {
-                return NotFound();
+
+                return RedirectToAction("Create");
             }
 
-            //var application = new InternshipApplication
-            //{
-            //    //ApplicantId = applicantId,
-            //    InternshipId = internshipId,
-            //    IsSaved = true ,
-            //    IsRegisterd = false
-            //};
 
-            //_context.InternshipApplication.Add(application);
-            //await _context.SaveChangesAsync();
+            bool isSaved = await _context.ApplicantInternship.AnyAsync(ai => ai.ApplicantId == applicant.Id && ai.InternshipId == id && ai.IsSaved);
 
-            return RedirectToAction(nameof(Index));
+            if (isSaved)
+            {
+
+                return RedirectToAction("PostedInternship");
+            }
+
+
+            var applicantInternship = new ApplicantInternship
+            {
+                ApplicantId = applicant.Id,
+                InternshipId = id,
+                IsSaved = true
+            };
+
+
+            _context.ApplicantInternship.Add(applicantInternship);
+            await _context.SaveChangesAsync();
+
+
+            return RedirectToAction("PostedInternship");
         }
 
 
@@ -154,6 +239,25 @@ namespace InternshipDotCom.Controllers
             return View(applicant);
         }
 
+
+        public async Task<IActionResult> InternshipDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var internship = await _context.Internship
+                .Include(i => i.Organization)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (internship == null)
+            {
+                return NotFound();
+            }
+
+            return View(internship);
+        }
+
         // GET: Applicants/Create
         public IActionResult Create()
         {
@@ -167,13 +271,14 @@ namespace InternshipDotCom.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Department,University,year")] Applicant applicant)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(applicant);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(applicant);
+            var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            applicant.ApplicationUserId = applicationUserId;
+
+            _context.Add(applicant);
+             await _context.SaveChangesAsync();
+             return RedirectToAction(nameof(Index));
+           
+            
         }
 
         // GET: Applicants/Edit/5

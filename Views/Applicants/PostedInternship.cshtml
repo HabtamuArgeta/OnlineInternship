@@ -4,76 +4,78 @@
     ViewData["Title"] = "Internships";
 }
 
-<h1>All Internships</h1>
+<style>
+    .internship-card {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+        overflow: hidden;
+    }
 
-<p>
-    Filter by organization:
-    <select id="organizationFilter">
-        <option value="">All</option>
-        @foreach (var organization in ViewBag.Organizations)
-        {
-            <option value="@organization.Id">@organization.OrganizationName</option>
-        }
-    </select>
-    <button onclick="applyFilter()">Apply Filter</button>
-</p>
+    .internship-card img {
+        object-fit: cover;
+        width: 100%;
+        height: 200px; 
+    }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.InternshipName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InternshipType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PostedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumberOfApplicant)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                Organization
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody id="internshipTableBody">
+    .internship-card .card-body {
+        flex: 1;
+        padding: 1.25rem;
+    }
+
+    .internship-card .btn-group {
+        margin-bottom: 0.5rem;
+    }
+</style>
+
+<div class="row align-items-center">
+    <div class="col-md-2">
+        <label for="organizationFilter" class="form-label">Filter by organization:</label>
+    </div>
+    <div class="col-md-3">
+        <select id="organizationFilter" class="form-select">
+            <option value="">All</option>
+            @foreach (var organization in ViewBag.Organizations)
+            {
+                <option value="@organization.Id">@organization.OrganizationName</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button onclick="applyFilter()" class="btn btn-primary">Apply Filter</button>
+    </div>
+</div>
+
+<br />
+
+<div class="PartialViewResult">
+    <div class="row ">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InternshipName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InternshipType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PostedAt)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberOfApplicant)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Organization.OrganizationName)
-                </td>
-            </tr>
+            <div class="col-lg-4 mb-4">
+                <div class="internship-card shadow-sm">
+                    <img src="@Html.DisplayFor(modelItem => item.ImagePath)" class="card-img-top" alt="Internship Image">
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.InternshipName)</h5>
+                        <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+                        <p class="card-text">Posted by: @Html.DisplayFor(modelItem => item.Organization.OrganizationName)</p>
+                        <div class="row">
+                            <div class="btn-group col-sm-8">
+                                <a class="btn btn-sm btn-outline-primary" asp-controller="Applicants" asp-action="RegisterForInternship" asp-route-id="@item.Id" >Apply</a>
+                                <a class="btn btn-sm btn-outline-secondary" asp-controller="Applicants" asp-action="SaveInternshipForFuture" asp-route-id="@item.Id" >Save</a>
+                                <a class="btn btn-sm btn-outline-info" asp-controller="Applicants" asp-action="InternshipDetails" asp-route-id="@item.Id" >Details</a>
+                            </div>
+                            
+                            <small class="text-muted col-sm-4">@Html.DisplayFor(modelItem => item.PostedAt)</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>
 
 @section Scripts {
     @{
@@ -89,8 +91,8 @@
                 type: 'GET',
                 data: { organizationId: selectedOrganizationId },
                 success: function (result) {
-                    // Replace the HTML content of the table body with the updated internship data
-                    $('#internshipTableBody').html(result);
+                    // Replace the HTML content of the internship cards with the updated data
+                    $('.PartialViewResult').html(result);
                 },
                 error: function (error) {
                     console.error('Error:', error);
