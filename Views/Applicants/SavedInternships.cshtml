@@ -63,8 +63,8 @@
                         <p class="card-text">Posted by: @Html.DisplayFor(modelItem => item.Organization.OrganizationName)</p>
                         <div class="row">
                             <div class="btn-group col-sm-8">
-                                <a class="btn btn-sm btn-outline-primary" asp-controller="Applicants" asp-action="RegisterForInternship" asp-route-id="@item.Id">Apply</a>
-                                <a class="btn btn-sm btn-outline-secondary" asp-controller="Applicants" asp-action="SaveInternshipForFuture" asp-route-id="@item.Id">Save</a>
+                                <a class="btn btn-sm btn-outline-danger" asp-controller="Applicants" asp-action="cancelSaving" asp-route-id="@item.Id">Cancel</a>
+                                <a class="btn btn-sm btn-outline-primary" asp-controller="Applicants" asp-action="Apply" asp-route-id="@item.Id">Apply</a>
                                 <a class="btn btn-sm btn-outline-info" asp-controller="Applicants" asp-action="InternshipDetails" asp-route-id="@item.Id">Details</a>
                             </div>
 

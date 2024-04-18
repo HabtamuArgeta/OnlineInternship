@@ -62,24 +62,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYW50c1xBcHBsaWVkSW50ZXJuc2hpcHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Applicants/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYW50c1xDcmVhdGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Applicants/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYW50c1xEZWxldGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Applicants/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYW50c1xEZXRhaWxzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Applicants/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYW50c1xFZGl0LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Applicants/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYW50c1xJbmRleC5jc2h0bWw=
+[C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Applicants/Apply.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYW50c1xBcHBseS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Applicants/InternshipDetails.cshtml]

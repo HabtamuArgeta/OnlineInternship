@@ -22,26 +22,22 @@ namespace InternshipDotCom.Controllers
             _context = context;
         }
 
-        // GET: Applicants
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Applicant.ToListAsync());
-        }
+
 
         public async Task<IActionResult> PostedInternship()
         {
-            
+
             var allOrganizations = await _context.Organization.ToListAsync();
 
-            
+
             ViewBag.Organizations = allOrganizations;
 
-           
+
             var allInternships = await _context.Internship
                 .Include(i => i.Organization)
                 .ToListAsync();
 
-            
+
             ViewBag.AllInternships = allInternships;
 
             return View(allInternships);
@@ -52,14 +48,9 @@ namespace InternshipDotCom.Controllers
         public async Task<IActionResult> AppliedInternships()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var applicant = await _context.Applicant.FirstOrDefaultAsync(a => a.ApplicationUserId == userId);
-
-            if (applicant == null)
-            {
-                return View("SaveOrApplyInternships");
-            }
+           
             var appliedOrganizations = await _context.ApplicantInternship
-                .Where(ai => ai.ApplicantId == applicant.Id && ai.IsApplied)
+                .Where(ai => ai.ApplicationUserId == userId && ai.IsApplied)
                 .Select(ai => ai.Internship.Organization)
                 .Distinct()
                 .ToListAsync();
@@ -69,7 +60,7 @@ namespace InternshipDotCom.Controllers
             var appliedInternships = await _context.ApplicantInternship
                 .Include(ai => ai.Internship)
                     .ThenInclude(i => i.Organization)
-                .Where(ai => ai.Applicant.ApplicationUserId == userId && ai.IsApplied)
+                .Where(ai => ai.ApplicationUserId == userId && ai.IsApplied)
                 .Select(ai => ai.Internship)
                 .ToListAsync();
 
@@ -84,15 +75,9 @@ namespace InternshipDotCom.Controllers
         public async Task<IActionResult> SavedInternships()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var applicant = await _context.Applicant.FirstOrDefaultAsync(a => a.ApplicationUserId == userId);
-
-            if (applicant == null)
-            {
-                return View("SaveOrApplyInternships");
-            }
-
+          
             var savedOrganizations = await _context.ApplicantInternship
-                .Where(ai => ai.ApplicantId == applicant.Id && ai.IsSaved)
+                .Where(ai => ai.ApplicationUserId == userId && ai.IsSaved)
                 .Select(ai => ai.Internship.Organization)
                 .Distinct()
                 .ToListAsync();
@@ -102,7 +87,7 @@ namespace InternshipDotCom.Controllers
             var savedInternships = await _context.ApplicantInternship
                 .Include(ai => ai.Internship)
                 .ThenInclude(i => i.Organization)
-                .Where(ai => ai.Applicant.ApplicationUserId == userId && ai.IsSaved)
+                .Where(ai => ai.ApplicationUserId == userId && ai.IsSaved)
                 .Select(ai => ai.Internship)
                 .ToListAsync();
             if (savedInternships.Count == 0)
@@ -116,127 +101,147 @@ namespace InternshipDotCom.Controllers
 
         public async Task<IActionResult> Filter(int? organizationId)
         {
-            
+
             var allOrganizations = await _context.Organization.ToListAsync();
 
-            
+
             ViewBag.Organizations = allOrganizations;
 
-           
+
             var internshipsQuery = _context.Internship
                 .Include(i => i.Organization)
                 .AsQueryable();
 
-            
+
             if (organizationId.HasValue)
             {
                 internshipsQuery = internshipsQuery.Where(i => i.OrganizationId == organizationId);
             }
 
-            
+
             var filteredInternships = await internshipsQuery.ToListAsync();
 
-            
+
             return PartialView("_InternshipTable", filteredInternships);
 
         }
 
-        public async Task<IActionResult> RegisterForInternship(int id)
+
+        public async Task<IActionResult> Apply(int id)
         {
+            var internship = _context.Internship.FirstOrDefault(i => i.Id == id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            bool isApplied = await _context.ApplicantInternship.AnyAsync(ai => ai.ApplicationUserId == userId && ai.InternshipId == id && ai.IsApplied);
 
-            var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-
-            var applicant = await _context.Applicant.FirstOrDefaultAsync(a => a.ApplicationUserId == applicationUserId);
-
-            if (applicant == null)
+            if (internship == null)
             {
-
-                return RedirectToAction("Create");
+                return NotFound();
             }
-
-
-            bool isApplied = await _context.ApplicantInternship.AnyAsync(ai => ai.ApplicantId == applicant.Id && ai.InternshipId == id && ai.IsApplied);
 
             if (isApplied)
             {
+                TempData["successMessage"] = "You have already applied for this internship.";
+                return RedirectToAction("AppliedInternships");
+            }
+           
+            var currentUser = _context.Users.FirstOrDefault(u => u.Id == userId);
+ 
+            ViewBag.FirstName = currentUser.FristName;
+            ViewBag.LastName = currentUser.LastName;
+            ViewBag.ApplicationUserId = userId;
+            ViewBag.InternshipId = id;
 
-                return RedirectToAction("PostedInternship");
+            var applicantInternship = new ApplicantInternship();
+
+            return View(applicantInternship);
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApplyForInternship(ApplicantInternship applicantInternship)
+        {
+            
+            bool internshipExist = await _context.ApplicantInternship.AnyAsync(ai => ai.ApplicationUserId == applicantInternship.ApplicationUserId && ai.InternshipId == applicantInternship.InternshipId);
+
+            if (internshipExist)
+            {
+                  var existingApplication = await _context.ApplicantInternship.FirstOrDefaultAsync(ai => ai.ApplicationUserId == applicantInternship.ApplicationUserId && ai.InternshipId == applicantInternship.InternshipId);
+
+                    existingApplication.FirstName = applicantInternship.FirstName;
+                    existingApplication.LastName = applicantInternship.LastName;
+                    existingApplication.Department = applicantInternship.Department;
+                    existingApplication.University = applicantInternship.University;
+                    existingApplication.Year = applicantInternship.Year;
+                    existingApplication.IsApplied = true;     
+            }
+            else
+            {
+                
+                var newApplicantInternship = new ApplicantInternship
+                {
+                    ApplicationUserId = applicantInternship.ApplicationUserId,
+                    InternshipId = applicantInternship.InternshipId,
+                    FirstName = applicantInternship.FirstName,
+                    LastName = applicantInternship.LastName,
+                    Department = applicantInternship.Department,
+                    University = applicantInternship.University,
+                    Year = applicantInternship.Year,
+                    IsApplied = true
+                };
+
+                _context.ApplicantInternship.Add(newApplicantInternship);
             }
 
-
-            var applicantInternship = new ApplicantInternship
-            {
-                ApplicantId = applicant.Id,
-                InternshipId = id,
-                IsApplied = true
-            };
-
-
-            _context.ApplicantInternship.Add(applicantInternship);
+            
             await _context.SaveChangesAsync();
 
-
-            return RedirectToAction("PostedInternship");
+            TempData["successMessage"] = "You have Applied this internship succesfully";
+            return RedirectToAction("PostedInternship", "Applicants");
         }
+
 
 
         public async Task<IActionResult> SaveInternshipForFuture(int id)
         {
-
             var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            bool internshipExist = await _context.ApplicantInternship.AnyAsync(ai => ai.ApplicationUserId == applicationUserId && ai.InternshipId == id);
 
-            var applicant = await _context.Applicant.FirstOrDefaultAsync(a => a.ApplicationUserId == applicationUserId);
-
-            if (applicant == null)
+            if (internshipExist)
             {
-
-                return RedirectToAction("Create");
+                bool isSaved = await _context.ApplicantInternship.AnyAsync(ai => ai.ApplicationUserId == applicationUserId && ai.InternshipId == id && ai.IsSaved);
+                if (isSaved)
+                {
+                    TempData["successMessage"] = "You have already saved  this internship.";
+                    return RedirectToAction("PostedInternship");
+                }
+                else
+                {
+                    
+                    var existingInternship = await _context.ApplicantInternship.FirstOrDefaultAsync(ai => ai.ApplicationUserId == applicationUserId && ai.InternshipId == id);
+                    if (existingInternship != null)
+                    {
+                        existingInternship.IsSaved = true;
+                    }
+                }
             }
-
-
-            bool isSaved = await _context.ApplicantInternship.AnyAsync(ai => ai.ApplicantId == applicant.Id && ai.InternshipId == id && ai.IsSaved);
-
-            if (isSaved)
+            else
             {
-
-                return RedirectToAction("PostedInternship");
+                // If the internship does not exist, create a new entry and mark it as saved
+                var applicantInternship = new ApplicantInternship
+                {
+                    ApplicationUserId = applicationUserId,
+                    InternshipId = id,
+                    IsSaved = true
+                };
+                _context.ApplicantInternship.Add(applicantInternship);
+                
             }
-
-
-            var applicantInternship = new ApplicantInternship
-            {
-                ApplicantId = applicant.Id,
-                InternshipId = id,
-                IsSaved = true
-            };
-
-
-            _context.ApplicantInternship.Add(applicantInternship);
             await _context.SaveChangesAsync();
-
-
+            TempData["successMessage"] = "You have saved this internship succesfully";
             return RedirectToAction("PostedInternship");
-        }
-
-
-        // GET: Applicants/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var applicant = await _context.Applicant
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (applicant == null)
-            {
-                return NotFound();
-            }
-
-            return View(applicant);
         }
 
 
@@ -258,116 +263,36 @@ namespace InternshipDotCom.Controllers
             return View(internship);
         }
 
-        // GET: Applicants/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
 
-        // POST: Applicants/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Department,University,year")] Applicant applicant)
+        public async Task<IActionResult> cancelApplication(int id)
         {
             var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            applicant.ApplicationUserId = applicationUserId;
-
-            _context.Add(applicant);
-             await _context.SaveChangesAsync();
-             return RedirectToAction(nameof(Index));
-           
-            
-        }
-
-        // GET: Applicants/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
+            var existingInternship = await _context.ApplicantInternship.FirstOrDefaultAsync(ai => ai.ApplicationUserId == applicationUserId && ai.InternshipId == id);
+            if (existingInternship != null)
             {
-                return NotFound();
-            }
+                existingInternship.IsApplied = false;
 
-            var applicant = await _context.Applicant.FindAsync(id);
-            if (applicant == null)
-            {
-                return NotFound();
-            }
-            return View(applicant);
-        }
-
-        // POST: Applicants/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Department,University,year")] Applicant applicant)
-        {
-            if (id != applicant.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(applicant);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ApplicantExists(applicant.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(applicant);
-        }
-
-        // GET: Applicants/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var applicant = await _context.Applicant
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (applicant == null)
-            {
-                return NotFound();
-            }
-
-            return View(applicant);
-        }
-
-        // POST: Applicants/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var applicant = await _context.Applicant.FindAsync(id);
-            if (applicant != null)
-            {
-                _context.Applicant.Remove(applicant);
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("PostedInternship");
         }
 
-        private bool ApplicantExists(int id)
+        public async Task<IActionResult> cancelSaving(int id)
         {
-            return _context.Applicant.Any(e => e.Id == id);
+            var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var existingInternship = await _context.ApplicantInternship.FirstOrDefaultAsync(ai => ai.ApplicationUserId == applicationUserId && ai.InternshipId == id);
+            if (existingInternship != null)
+            {
+                existingInternship.IsSaved = false;
+
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("PostedInternship");
         }
+
     }
 }
+
+

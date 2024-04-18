@@ -36,7 +36,7 @@ namespace InternshipDotCom.Servieces
         }
         public DbSet<InternshipDotCom.Models.Internship> Internship { get; set; } = default!;
         public DbSet<InternshipDotCom.Models.Organization> Organization { get; set; } = default!;
-        public DbSet<InternshipDotCom.Models.Applicant> Applicant { get; set; } = default!;
+      
 
         public DbSet<InternshipDotCom.Models.ApplicantInternship> ApplicantInternship { get; set; } = default!;
 

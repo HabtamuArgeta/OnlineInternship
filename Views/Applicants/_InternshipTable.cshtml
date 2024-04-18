@@ -14,11 +14,10 @@
                     <p class="card-text">Posted by: @Html.DisplayFor(modelItem => item.Organization.OrganizationName)</p>
                     <div class="row">
                         <div class="btn-group col-sm-8">
-                            <button type="button" class="btn btn-sm btn-outline-primary" onclick="applyForInternship(@item.Id)">Apply</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="saveInternship(@item.Id)">Save</button>
+                            <a class="btn btn-sm btn-outline-primary" asp-controller="Applicants" asp-action="Apply" asp-route-id="@item.Id">Apply</a>
+                            <a class="btn btn-sm btn-outline-secondary" asp-controller="Applicants" asp-action="SaveInternshipForFuture" asp-route-id="@item.Id">Save</a>
                             <a class="btn btn-sm btn-outline-info" asp-controller="Applicants" asp-action="InternshipDetails" asp-route-id="@item.Id">Details</a>
                         </div>
-
                         <small class="text-muted col-sm-4">@Html.DisplayFor(modelItem => item.PostedAt)</small>
                     </div>
                 </div>

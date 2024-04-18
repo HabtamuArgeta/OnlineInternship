@@ -17,12 +17,12 @@ namespace InternshipDotCom.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("InternshipDotCom.Models.Applicant", b =>
+            modelBuilder.Entity("InternshipDotCom.Models.ApplicantInternship", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,42 +35,10 @@ namespace InternshipDotCom.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Department")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("University")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("year")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("Applicant");
-                });
-
-            modelBuilder.Entity("InternshipDotCom.Models.ApplicantInternship", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("ApplicantId")
-                        .HasColumnType("int");
 
                     b.Property<int>("InternshipId")
                         .HasColumnType("int");
@@ -81,9 +49,18 @@ namespace InternshipDotCom.Migrations
                     b.Property<bool>("IsSaved")
                         .HasColumnType("bit");
 
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("University")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Year")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicantId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("InternshipId");
 
@@ -281,31 +258,31 @@ namespace InternshipDotCom.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b7da08c0-86ec-477f-816a-ed5d39dbaa98",
+                            Id = "51b1cd48-1be7-45bd-8791-2a45d20cde0b",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "9e983d3e-c15d-4232-bc16-277eff0ce964",
+                            Id = "02e4524d-ba80-4369-a610-49ceb8bc8f00",
                             Name = "applicant",
                             NormalizedName = "applicant"
                         },
                         new
                         {
-                            Id = "560e02bd-1bdb-4264-869c-3454c96e7680",
+                            Id = "ca582627-9b4f-49a8-8a7a-af57ed3458e8",
                             Name = "InternshipCordinator",
                             NormalizedName = "InternshipCordinator"
                         },
                         new
                         {
-                            Id = "81c190fd-38b1-48bd-bf40-b6513d21707d",
+                            Id = "d01088d5-9ea1-46d0-a2f1-c208179e318c",
                             Name = "organization",
                             NormalizedName = "organization"
                         },
                         new
                         {
-                            Id = "cd67d42d-31b2-45ee-a737-23a339153702",
+                            Id = "5ac6b499-b8a9-465a-a229-3ec6fd0758e2",
                             Name = "Pending",
                             NormalizedName = "Pending"
                         });
@@ -421,7 +398,7 @@ namespace InternshipDotCom.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("InternshipDotCom.Models.Applicant", b =>
+            modelBuilder.Entity("InternshipDotCom.Models.ApplicantInternship", b =>
                 {
                     b.HasOne("InternshipDotCom.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
@@ -429,22 +406,13 @@ namespace InternshipDotCom.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
-                });
-
-            modelBuilder.Entity("InternshipDotCom.Models.ApplicantInternship", b =>
-                {
-                    b.HasOne("InternshipDotCom.Models.Applicant", "Applicant")
-                        .WithMany("ApplicantInternship")
-                        .HasForeignKey("ApplicantId");
-
                     b.HasOne("InternshipDotCom.Models.Internship", "Internship")
                         .WithMany("ApplicantInternship")
                         .HasForeignKey("InternshipId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Applicant");
+                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Internship");
                 });
@@ -520,11 +488,6 @@ namespace InternshipDotCom.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("InternshipDotCom.Models.Applicant", b =>
-                {
-                    b.Navigation("ApplicantInternship");
                 });
 
             modelBuilder.Entity("InternshipDotCom.Models.Internship", b =>
