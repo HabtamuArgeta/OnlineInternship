@@ -1,0 +1,50 @@
+﻿@model InternshipDotCom.Models.ApplicantInternship
+
+<style>
+    #applicant-details-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+        #applicant-details-container h2 {
+            color: #007bff;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        #applicant-details-container p {
+            margin: 8px 0;
+        }
+
+        #applicant-details-container button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+            #applicant-details-container button:hover {
+                background-color: #0056b3;
+            }
+</style>
+
+<div id="applicant-details-container">
+    <h2>Student Name: @Model.ApplicationUser.FristName @Model.ApplicationUser.LastName</h2>
+    <p>Email: @Model.ApplicationUser.Email</p>
+    <p>Phone Number: @Model.ApplicationUser.PhoneNumber</p>
+    <p>Internship Name: @(Model.Internship != null ? Model.Internship.InternshipName : "N/A")</p>
+    <p>Department: @Model.Department</p>
+    <p>University: @Model.University</p>
+    <p>Year: @Model.Year</p>
+
+    <button class="close-button" onclick="closeDetails()">Close</button>
+</div>
+
+

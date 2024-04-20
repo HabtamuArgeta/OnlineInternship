@@ -82,8 +82,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYW50c1xTYXZlT3JBcHBseUludGVybnNoaXBzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Applicants/_AppliedInternshipTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYW50c1xfQXBwbGllZEludGVybnNoaXBUYWJsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Applicants/_InternshipTable.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYW50c1xfSW50ZXJuc2hpcFRhYmxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Applicants/_SavedInternshipTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYW50c1xfU2F2ZWRJbnRlcm5zaGlwVGFibGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Home/Index.cshtml]
@@ -136,6 +144,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Organizations/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JnYW5pemF0aW9uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Organizations/ViewRegisteredStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JnYW5pemF0aW9uc1xWaWV3UmVnaXN0ZXJlZFN0dWRlbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Organizations/_ApplicantDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JnYW5pemF0aW9uc1xfQXBwbGljYW50RGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Organizations/_FilteredApplicant.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JnYW5pemF0aW9uc1xfRmlsdGVyZWRBcHBsaWNhbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Shared/Error.cshtml]

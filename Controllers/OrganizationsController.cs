@@ -134,6 +134,133 @@ namespace InternshipDotCom.Controllers
                 return RedirectToAction(nameof(Index));
         }
 
+
+
+        public async Task<IActionResult> ViewRegisteredStudents()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Retrieve organization IDs owned by the current user
+            var userOrganizationIds = await _context.Organization
+                .Where(o => o.ApplicationUserId == userId)
+                .Select(o => o.Id)
+                .ToListAsync();
+
+            // Filter internships based on the organization IDs
+            var internships = await _context.Internship
+                .Include(i => i.Organization)
+                .Where(i => userOrganizationIds.Contains(i.OrganizationId))
+                .ToListAsync();
+
+            // Retrieve the IDs of internships associated with the organizations
+            var internshipIds = internships.Select(i => i.Id).ToList();
+
+            // Retrieve registered students for these internships
+            var registeredStudents = await _context.ApplicantInternship
+                .Include(ai => ai.ApplicationUser)
+                .Include(ai => ai.Internship)
+                .Where(ai => internshipIds.Contains(ai.InternshipId) && ai.IsApplied)
+                .ToListAsync();
+
+            // Get unique organizations for which at least one student has applied
+            var appliedOrganizationIds = registeredStudents.Select(rs => rs.Internship.OrganizationId).Distinct().ToList();
+
+            // Retrieve organizations corresponding to these IDs
+            var appliedOrganizations = await _context.Organization
+                .Where(org => appliedOrganizationIds.Contains(org.Id))
+                .ToListAsync();
+
+            ViewBag.Organizations = appliedOrganizations;
+
+            return View(registeredStudents);
+        }
+
+
+        public async Task<IActionResult> ViewApplicantDetails(string applicationUserId, int internshipId)
+        {
+            var applicant = await _context.ApplicantInternship
+                .Include(ai => ai.ApplicationUser)
+                .Include(ai => ai.Internship)
+                .FirstOrDefaultAsync(ai => ai.ApplicationUserId == applicationUserId && ai.InternshipId == internshipId);
+
+            if (applicant == null)
+            {
+                return NotFound();
+            }
+
+            return PartialView("_ApplicantDetails", applicant);
+        }
+
+
+
+
+        public async Task<IActionResult> FilterApplicants(int? organizationId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Retrieve organization IDs owned by the current user
+            var userOrganizationIds = await _context.Organization
+                .Where(o => o.ApplicationUserId == userId)
+                .Select(o => o.Id)
+                .ToListAsync();
+
+            // Filter internships based on the organization IDs owned by the user
+            IQueryable<Internship> internshipsQuery = _context.Internship
+                .Include(i => i.Organization)
+                .Where(i => userOrganizationIds.Contains(i.OrganizationId));
+
+            // Filter internships based on the provided organization ID
+            if (organizationId.HasValue)
+            {
+                internshipsQuery = internshipsQuery.Where(i => i.OrganizationId == organizationId);
+            }
+
+            // Retrieve the IDs of internships associated with the organizations
+            var internshipIds = await internshipsQuery.Select(i => i.Id).ToListAsync();
+
+            // Retrieve applicants who have applied for these internships
+            var filteredApplicants = await _context.ApplicantInternship
+                .Include(ai => ai.ApplicationUser)
+                .Include(ai => ai.Internship) // Ensure Internship property is loaded
+                .Where(ai => internshipIds.Contains(ai.InternshipId) && ai.IsApplied)
+                .ToListAsync();
+
+            // Get unique organizations for which at least one student has applied
+            var appliedOrganizationIds = filteredApplicants.Select(ai => ai.Internship.OrganizationId).Distinct().ToList();
+
+            // Retrieve organizations corresponding to these IDs
+            var appliedOrganizations = await _context.Organization
+                .Where(org => appliedOrganizationIds.Contains(org.Id))
+                .ToListAsync();
+
+            ViewBag.Organizations = appliedOrganizations;
+
+            return PartialView("_FilteredApplicant", filteredApplicants);
+        }
+
+
+        public async Task<IActionResult> LoadApplicants(int page = 1)
+        {
+            var pageSize = 5;
+            var skip = (page - 1) * pageSize;
+            int totalItemCount = await _context.ApplicantInternship
+                .Where(ai => ai.IsApplied)
+                .CountAsync();
+            ViewBag.TotalItemCount = totalItemCount;
+
+            var applicants = await _context.ApplicantInternship
+                .Include(ai => ai.ApplicationUser)
+                .Include(ai => ai.Internship)
+                .Where(ai => ai.IsApplied)
+                .OrderBy(ai => ai.Id)
+                .Skip(skip)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return PartialView("_FilteredApplicant", applicants);
+        }
+
+
         // GET: Organizations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

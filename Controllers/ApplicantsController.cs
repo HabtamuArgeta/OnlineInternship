@@ -127,6 +127,65 @@ namespace InternshipDotCom.Controllers
         }
 
 
+        public async Task<IActionResult> FilterApplied(int? organizationId)
+        {
+            var allOrganizations = await _context.Organization.ToListAsync();
+            ViewBag.Organizations = allOrganizations;
+
+            var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var appliedInternshipsQuery = _context.ApplicantInternship
+                .Where(ai => ai.ApplicationUserId == applicationUserId && ai.IsApplied)
+                .Select(ai => ai.InternshipId);
+ 
+            var internshipsQuery = _context.Internship
+                .Where(i => appliedInternshipsQuery.Contains(i.Id))
+                .Include(i => i.Organization)
+                .AsQueryable();
+
+            if (organizationId.HasValue)
+            {
+                internshipsQuery = internshipsQuery.Where(i => i.OrganizationId == organizationId);
+            }
+
+            var filteredInternships = await internshipsQuery.ToListAsync();
+
+            return PartialView("_AppliedInternshipTable", filteredInternships);
+        }
+
+        public async Task<IActionResult> FilterSaved(int? organizationId)
+        {
+            var allOrganizations = await _context.Organization.ToListAsync();
+            ViewBag.Organizations = allOrganizations;
+
+            var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Get saved internships for the current user
+            var savedInternshipsQuery = _context.ApplicantInternship
+                .Where(ai => ai.ApplicationUserId == applicationUserId && ai.IsSaved)
+                .Select(ai => ai.InternshipId);
+
+            // Query internships based on the saved internships for the current user
+            var internshipsQuery = _context.Internship
+                .Where(i => savedInternshipsQuery.Contains(i.Id))
+                .Include(i => i.Organization)
+                .AsQueryable();
+
+            // Apply organization filter if provided
+            if (organizationId.HasValue)
+            {
+                internshipsQuery = internshipsQuery.Where(i => i.OrganizationId == organizationId);
+            }
+
+            // Get the filtered internships
+            var filteredInternships = await internshipsQuery.ToListAsync();
+
+            // Return the filtered internships as a partial view
+            return PartialView("_SavedInternshipTable", filteredInternships);
+        }
+
+
+
         public async Task<IActionResult> Apply(int id)
         {
             var internship = _context.Internship.FirstOrDefault(i => i.Id == id);

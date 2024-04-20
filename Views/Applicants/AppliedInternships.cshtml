@@ -86,7 +86,7 @@
             var selectedOrganizationId = document.getElementById('organizationFilter').value;
 
             $.ajax({
-                url: '@Url.Action("Filter", "Applicants")',
+                url: '@Url.Action("FilterApplied", "Applicants")',
                 type: 'GET',
                 data: { organizationId: selectedOrganizationId },
                 success: function (result) {

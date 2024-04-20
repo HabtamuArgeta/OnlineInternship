@@ -1,0 +1,249 @@
+﻿@model List<InternshipDotCom.Models.ApplicantInternship>
+
+@{
+    // Pagination settings
+    int pageSize = 5;
+    int totalpageCount = Model.Count;
+    int totalPages = (int)Math.Ceiling(Model.Count / (double)pageSize);
+}
+
+<style>
+  
+    .filter-container {
+        margin-bottom: 20px;
+    }
+
+        .filter-container label {
+            font-weight: bold;
+        }
+
+        .filter-container select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .filter-container button {
+            margin-top: 5px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+    .applicant-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .applicant-table th,
+        .applicant-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .applicant-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: left;
+        }
+
+    .no-applicants {
+        margin-top: 20px;
+        font-style: italic;
+        color: #777;
+    }
+
+    .pagination {
+        margin-top: 20px;
+        text-align: right; /* Align pagination to the right */
+    }
+
+        .pagination a {
+            display: inline-block;
+            padding: 5px 10px;
+            margin-right: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+            .pagination a.active {
+                background-color: #007bff;
+                color: #fff;
+            }
+
+    .view-details-link {
+        color: #007bff;
+        text-decoration: none;
+        border: 1px solid #007bff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        background-color: rgba(0, 123, 255, 0.1);
+    }
+
+        .view-details-link:hover {
+            background-color: rgba(0, 123, 255, 0.2);
+            color: #007bff;
+        }
+
+
+
+</style>
+
+
+<div class="filter-container">
+    <div class="row">
+        <div class="col-md-2">
+            <label for="organizationFilter">Filter by organization:</label>
+        </div>
+        <div class="col-md-3">
+            <select id="organizationFilter">
+                <option value="">All</option>
+                @foreach (var organization in ViewBag.Organizations)
+                {
+                    <option value="@organization.Id">@organization.OrganizationName</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button onclick="applyFilter()">Apply Filter</button>
+        </div>
+    </div>
+</div>
+
+<div class="applicant-list">
+    @if (Model.Any())
+    {
+        <table class="applicant-table">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Internship Name</th>
+                    <th>Application Detail</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var registration in Model.Take(pageSize))
+                {
+                    <tr>
+                        <td>@registration.ApplicationUser.FristName</td>
+                        <td>@registration.ApplicationUser.Email</td>
+                        <td>@registration.ApplicationUser.PhoneNumber</td>
+                        <td>@(registration.Internship != null ? registration.Internship.InternshipName : "N/A")</td>
+                        <td>
+                            <a href="javascript:void(0);" onclick="viewApplicantDetails('@registration.ApplicationUserId', @registration.InternshipId)" class="view-details-link">View Details</a>
+                        </td>
+
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @if (totalPages > 1 )
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pagination d-flex justify-content-end">
+                        @for (int i = 1; i <= totalPages; i++)
+                        {
+                            <a class="@(i == 1 ? "active paginatedItem" : "paginatedItem")" onclick="changePage(@i)" style="cursor: pointer;">@i</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+       
+    }
+    else
+    {
+        <p class="no-applicants">No students registered for internships posted by this organization.</p>
+    }
+</div>
+<div id="applicant-details-container"></div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function applyFilter() {
+            var selectedOrganizationId = $('#organizationFilter').val();
+
+            $.ajax({
+                url: '@Url.Action("FilterApplicants", "Organizations")',
+                type: 'GET',
+                data: { organizationId: selectedOrganizationId },
+                success: function (result) {
+                    $('.applicant-list').html(result);
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+        function viewApplicantDetails(applicationUserId, internshipId) {
+            
+            $.ajax({
+                url: '@Url.Action("ViewApplicantDetails", "Organizations")',
+                type: 'GET',
+                data: { applicationUserId: applicationUserId, internshipId: internshipId },
+                success: function (result) {
+                    $('#applicant-details-container').html(result);
+                    displayApplicantDetails();
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+
+
+
+        function displayApplicantDetails() {
+            
+            $('#applicant-details-container').show();
+        }
+
+        function closeDetails() {
+        
+            $('#applicant-details-container').hide();
+        }
+
+
+
+        function changePage(pageNumber) {
+
+           
+            $.ajax({
+                url: '@Url.Action("LoadApplicants", "Organizations")',
+                type: 'GET',
+                data: { page: pageNumber },
+                success: function (result) {
+                    $('.applicant-list').html(result);
+
+                    let active = document.getElementsByClassName('paginatedItem');
+                    let i;
+                    for (i = 0; i < active.length; i++) {
+                        active[i].className = active[i].className.replace(' active', '');
+                    }
+                    active[i].className += " active";
+                   
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+    </script>
+}
+
+

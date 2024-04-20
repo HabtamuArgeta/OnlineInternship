@@ -87,7 +87,7 @@
 
             // Make an AJAX call to the Index action with the selected organization ID
             $.ajax({
-                url: '@Url.Action("Filter", "Applicants")',
+                    url: '@Url.Action("FilterSaved", "Applicants")',
                 type: 'GET',
                 data: { organizationId: selectedOrganizationId },
                 success: function (result) {

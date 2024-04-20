@@ -1,0 +1,61 @@
+﻿@model List<InternshipDotCom.Models.ApplicantInternship>
+@{
+    // Pagination settings
+    int pageSize = 5;
+    int totalpageCount = ViewBag.TotalItemCount;
+    int totalPages = (int)Math.Ceiling(totalpageCount / (double)pageSize);
+}
+<style>
+    .pagination a.active {
+        background-color: #007bff;
+        color: #fff;
+    }
+</style>
+@if (Model.Any())
+{
+    <table class="applicant-table">
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Internship Name</th>
+                <th>Application Detail</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var registration in Model.Take(pageSize))
+            {
+                <tr>
+                    <td>@registration.ApplicationUser.FristName</td>
+                    <td>@registration.ApplicationUser.Email</td>
+                    <td>@registration.ApplicationUser.PhoneNumber</td>
+                    <td>@(registration.Internship != null ? registration.Internship.InternshipName : "N/A")</td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="viewApplicantDetails('@registration.ApplicationUserId', @registration.InternshipId)" class="view-details-link">View Details</a>
+                    </td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (totalpageCount > 5)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pagination d-flex justify-content-end">
+                    @for (int i = 1; i <= totalPages; i++)
+                    {
+                        <a class="@(i == 1 ? "active paginatedItem" : "paginatedItem")" onclick="changePage(@i)" style="cursor: pointer;">@i</a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p class="no-applicants">No students registered for internships posted by this organization.</p>
+}
