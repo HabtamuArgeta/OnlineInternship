@@ -9,6 +9,7 @@ using InternshipDotCom.Models;
 using InternshipDotCom.Servieces;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 
 namespace InternshipDotCom.Controllers
 {
@@ -17,9 +18,12 @@ namespace InternshipDotCom.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public ApplicantsController(ApplicationDbContext context)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ApplicantsController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+
+            _webHostEnvironment = webHostEnvironment;
         }
 
 
@@ -233,22 +237,53 @@ namespace InternshipDotCom.Controllers
                     existingApplication.Department = applicantInternship.Department;
                     existingApplication.University = applicantInternship.University;
                     existingApplication.Year = applicantInternship.Year;
-                    existingApplication.IsApplied = true;     
+                    existingApplication.CoverLetter = applicantInternship.CoverLetter;
+                    existingApplication.IsApplied = true;
+
+                if (applicantInternship.Resume != null && applicantInternship.Resume.ContentType == "application/pdf")
+
+                {
+                    string AbsolutePath = "C:\\Program Files\\installed apps\\Linux comanned\\crzylearning\\DotNet Apps\\InternshipDotCom\\wwwroot";
+                    string RelativePath = "/Files/Resume/";
+                    RelativePath += Guid.NewGuid().ToString() + "_" + applicantInternship.Resume.FileName;
+                    AbsolutePath += RelativePath;
+                    existingApplication.ResumePath = RelativePath;
+
+                    string ServerFolder = Path.Combine(_webHostEnvironment.WebRootPath, AbsolutePath);
+
+                    await applicantInternship.Resume.CopyToAsync(new FileStream(ServerFolder, FileMode.Create));
+
+                }
             }
             else
             {
-                
-                var newApplicantInternship = new ApplicantInternship
+
+                var newApplicantInternship = new ApplicantInternship();
+
+                    newApplicantInternship.ApplicationUserId = applicantInternship.ApplicationUserId;
+                    newApplicantInternship.InternshipId = applicantInternship.InternshipId;
+                    newApplicantInternship.FirstName = applicantInternship.FirstName;
+                    newApplicantInternship.LastName = applicantInternship.LastName;
+                    newApplicantInternship.Department = applicantInternship.Department;
+                    newApplicantInternship.University = applicantInternship.University;
+                    newApplicantInternship.Year = applicantInternship.Year;
+                    newApplicantInternship.CoverLetter = applicantInternship.CoverLetter;
+                    newApplicantInternship.IsApplied = true;
+
+                if (applicantInternship.Resume != null && applicantInternship.Resume.ContentType == "application/pdf")
+
                 {
-                    ApplicationUserId = applicantInternship.ApplicationUserId,
-                    InternshipId = applicantInternship.InternshipId,
-                    FirstName = applicantInternship.FirstName,
-                    LastName = applicantInternship.LastName,
-                    Department = applicantInternship.Department,
-                    University = applicantInternship.University,
-                    Year = applicantInternship.Year,
-                    IsApplied = true
-                };
+                    string AbsolutePath = "C:\\Program Files\\installed apps\\Linux comanned\\crzylearning\\DotNet Apps\\InternshipDotCom\\wwwroot";
+                    string RelativePath = "/Files/Resume/";
+                    RelativePath += Guid.NewGuid().ToString() + "_" + applicantInternship.Resume.FileName;
+                    AbsolutePath += RelativePath;
+                    newApplicantInternship.ResumePath = RelativePath;
+
+                    string ServerFolder = Path.Combine(_webHostEnvironment.WebRootPath, AbsolutePath);
+
+                    await applicantInternship.Resume.CopyToAsync(new FileStream(ServerFolder, FileMode.Create));
+
+                }
 
                 _context.ApplicantInternship.Add(newApplicantInternship);
             }

@@ -261,6 +261,23 @@ namespace InternshipDotCom.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<IActionResult> CallForInterview(string applicationUserId, int internshipId)
+        {
+            var applicant = await _context.ApplicantInternship.FirstOrDefaultAsync(ai => ai.ApplicationUserId == applicationUserId && ai.InternshipId == internshipId);
+
+            if (applicant == null)
+            {
+                return NotFound();
+            }
+            applicant.IsCalledForInterview = true;
+            await _context.SaveChangesAsync();
+
+          
+            return Json(new { success = true });
+        }
+
+
         // GET: Organizations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

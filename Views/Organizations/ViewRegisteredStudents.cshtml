@@ -207,6 +207,26 @@
         }
 
 
+        function callForInterview(applicationUserId, internshipId) {
+            $.ajax({
+                url: '@Url.Action("CallForInterview", "Organizations")',
+                type: 'POST',
+                data: { applicationUserId: applicationUserId, internshipId: internshipId },
+                success: function (response) {
+                    if (response.success) {
+                        // Optionally, you can update the UI to reflect the change
+                        alert('Applicant called for interview successfully.');
+                        
+                    } else {
+                        console.error('Failed to call applicant for interview.');
+                    }
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+
 
         function displayApplicantDetails() {
             

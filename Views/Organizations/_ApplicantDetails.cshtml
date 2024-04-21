@@ -33,18 +33,73 @@
             #applicant-details-container button:hover {
                 background-color: #0056b3;
             }
+
+    .cover-letter {
+        margin-top: 8px;
+        padding: 20px;
+        padding-top:10px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        height:230px;
+        overflow:auto;
+    }
+
+        .cover-letter h3 {
+            color: #007bff; 
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .cover-letter p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
 </style>
 
 <div id="applicant-details-container">
-    <h2>Student Name: @Model.ApplicationUser.FristName @Model.ApplicationUser.LastName</h2>
-    <p>Email: @Model.ApplicationUser.Email</p>
-    <p>Phone Number: @Model.ApplicationUser.PhoneNumber</p>
-    <p>Internship Name: @(Model.Internship != null ? Model.Internship.InternshipName : "N/A")</p>
-    <p>Department: @Model.Department</p>
-    <p>University: @Model.University</p>
-    <p>Year: @Model.Year</p>
+    <div class="row">
+        <div class="col-md-4" style="margin-top:13px;">
+            <h2>Student Name: @Model.ApplicationUser.FristName @Model.ApplicationUser.LastName</h2>
+            <p>Email: @Model.ApplicationUser.Email</p>
+            <p>Phone Number: @Model.ApplicationUser.PhoneNumber</p>
+            <p>Internship Name: @(Model.Internship != null ? Model.Internship.InternshipName : "N/A")</p>
+            <p>Department: @Model.Department</p>
+            <p>University: @Model.University</p>
+            <p>Year: @Model.Year</p>
+        </div>
+        <div class="col-md-8">
+            @if (!string.IsNullOrEmpty(Model.CoverLetter))
+            {
+                <div class="cover-letter">
+                    <h3>Cover Letter:</h3>
+                    <p style="word-wrap: break-word;">@Model.CoverLetter</p>
+                </div>
+            }
+        </div>
 
-    <button class="close-button" onclick="closeDetails()">Close</button>
+    </div>
+    <br />
+    @if (!string.IsNullOrEmpty(Model.ResumePath))
+    {
+        <div class="resume">
+            <h3>Resume:</h3>
+            <embed src="@Model.ResumePath" width="100%" height="600px" type="application/pdf">
+        </div>
+    }
+
+    <div class="row mt-3">
+        <button class="close-button col-sm-2" onclick="closeDetails()">Close</button>
+        <div class="col-sm-7"></div>
+        <div class="col-sm-3">
+            @if (Model.IsCalledForInterview)
+            {
+                <p style="font-weight: bold; color: green;">Called for Interview</p>
+            }
+            else
+            {
+                <button onclick="callForInterview('@Model.ApplicationUser.Id', @Model.InternshipId)">Call for Interview</button>
+            }
+        </div>
+    </div>
 </div>
-
-

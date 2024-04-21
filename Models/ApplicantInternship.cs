@@ -1,4 +1,7 @@
-﻿namespace InternshipDotCom.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace InternshipDotCom.Models
 {
     public class ApplicantInternship
     {
@@ -10,6 +13,15 @@
         public string? Department { get; set; }
         public string? University { get; set; }
         public string? Year { get; set; }
+
+        public string? CoverLetter { get; set; }
+
+        public bool IsCalledForInterview { get; set; }
+
+        [Display(Name = "Resume / Cv")]
+        [NotMapped]
+        public IFormFile? Resume { get; set; }
+        public string? ResumePath { get; set; }
         public int InternshipId { get; set; }
         public Internship Internship { get; set; }
         public bool IsSaved { get; set; }

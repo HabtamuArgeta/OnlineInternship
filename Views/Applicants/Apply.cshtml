@@ -10,12 +10,10 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="ApplyForInternship">
+        <form asp-action="ApplyForInternship" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
-            
+
             <input type="hidden" asp-for="InternshipId" value="@ViewBag.InternshipId" />
-            
             <input type="hidden" asp-for="ApplicationUserId" value="@ViewBag.ApplicationUserId" />
 
             <div class="form-group">
@@ -31,23 +29,35 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Department" class="control-label"></label>
+                <label asp-for="Department" class="control-label">Department</label>
                 <input asp-for="Department" class="form-control" required />
                 <span asp-validation-for="Department" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="University" class="control-label"></label>
+                <label asp-for="University" class="control-label">University</label>
                 <input asp-for="University" class="form-control" required />
                 <span asp-validation-for="University" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Year" class="control-label"></label>
+                <label asp-for="Year" class="control-label">Year</label>
                 <input asp-for="Year" class="form-control" required />
                 <span asp-validation-for="Year" class="text-danger"></span>
             </div>
-            
+
+            <div class="form-group">
+                <label asp-for="CoverLetter" class="control-label">Cover Letter</label>
+                <textarea asp-for="CoverLetter" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="CoverLetter" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Resume" class="control-label">Resume / CV</label>
+                <input asp-for="Resume" class="form-control" type="file" />
+                <span asp-validation-for="Resume" class="text-danger"></span>
+            </div>
+
             <input type="hidden" asp-for="IsApplied" value="true" />
-            
+
             <div class="form-group">
                 <input type="submit" value="Apply" class="btn btn-primary" />
             </div>
@@ -60,5 +70,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
