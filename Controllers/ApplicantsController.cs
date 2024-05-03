@@ -18,12 +18,15 @@ namespace InternshipDotCom.Controllers
     {
         private readonly ApplicationDbContext _context;
 
+
         private readonly IWebHostEnvironment _webHostEnvironment;
         public ApplicantsController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
 
             _webHostEnvironment = webHostEnvironment;
+
+        
         }
 
 
@@ -40,9 +43,13 @@ namespace InternshipDotCom.Controllers
             var allInternships = await _context.Internship
                 .Include(i => i.Organization)
                 .ToListAsync();
-
+            
 
             ViewBag.AllInternships = allInternships;
+            if (allInternships.Count == 0)
+            {
+                return View("SaveOrApplyInternships");
+            }
 
             return View(allInternships);
 
@@ -358,6 +365,25 @@ namespace InternshipDotCom.Controllers
         }
 
 
+        public async Task<IActionResult> InternshipDetailsCalledForInterview(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var internship = await _context.Internship
+                .Include(i => i.Organization)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (internship == null)
+            {
+                return NotFound();
+            }
+
+            return View(internship);
+        }
+
+
         public async Task<IActionResult> cancelApplication(int id)
         {
             var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -386,7 +412,65 @@ namespace InternshipDotCom.Controllers
             return RedirectToAction("PostedInternship");
         }
 
+
+
+        public async Task<IActionResult> ViewApplicationResponses()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var calledInternships = await _context.ApplicantInternship
+                .Include(ai => ai.Internship)
+                    .ThenInclude(i => i.Organization)
+                .Where(ai => ai.ApplicationUserId == userId && ai.IsCalledForInterview)
+                .ToListAsync();
+
+            return View(calledInternships);
+        }
+
+
+
+
+        public async Task<IActionResult> AcceptInterview(int internshipId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var applicant = await _context.ApplicantInternship.FirstOrDefaultAsync(ai => ai.ApplicationUserId == userId && ai.InternshipId == internshipId);
+
+            if (applicant == null)
+            {
+                return NotFound();
+            }
+
+            
+            applicant.IsInterviewAccepted = true;
+            await _context.SaveChangesAsync();
+
+           
+            string interviewLink = applicant.InterviewLink;
+
+            return Json(new { success = true, interviewLink = interviewLink });
+        }
+
+
+
+        public async Task<int> GetPendingInterviewsCount()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var pendingInterviewsCount = await _context.ApplicantInternship
+                .Where(ai => ai.ApplicationUserId == userId && ai.IsCalledForInterview && !ai.IsInterviewAccepted)
+                .CountAsync();
+
+            return pendingInterviewsCount;
+        }
+
+
+
     }
 }
+    
+
+
+
+
 
 

@@ -70,6 +70,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYW50c1xJbnRlcm5zaGlwRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Applicants/InternshipDetailsCalledForInterview.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYW50c1xJbnRlcm5zaGlwRGV0YWlsc0NhbGxlZEZvckludGVydmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Applicants/PostedInternship.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYW50c1xQb3N0ZWRJbnRlcm5zaGlwLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -80,6 +84,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Applicants/SaveOrApplyInternships.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYW50c1xTYXZlT3JBcHBseUludGVybnNoaXBzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Applicants/ViewApplicationResponses.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYW50c1xWaWV3QXBwbGljYXRpb25SZXNwb25zZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Program Files/installed apps/Linux comanned/crzylearning/DotNet Apps/InternshipDotCom/Views/Applicants/_AppliedInternshipTable.cshtml]

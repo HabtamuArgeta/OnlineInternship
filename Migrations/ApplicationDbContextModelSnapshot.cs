@@ -40,16 +40,25 @@ namespace InternshipDotCom.Migrations
                     b.Property<string>("Department")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("FinishedInternship")
+                        .HasColumnType("bit");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("InternshipId")
                         .HasColumnType("int");
 
+                    b.Property<string>("InterviewLink")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsApplied")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsCalledForInterview")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsInterviewAccepted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsSaved")
@@ -61,11 +70,20 @@ namespace InternshipDotCom.Migrations
                     b.Property<string>("ResumePath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("StartedInternship")
+                        .HasColumnType("bit");
+
                     b.Property<string>("University")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Year")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("interviewDate")
+                        .HasColumnType("date");
+
+                    b.Property<TimeSpan>("interviewTime")
+                        .HasColumnType("time");
 
                     b.HasKey("Id");
 
@@ -267,31 +285,31 @@ namespace InternshipDotCom.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a8052d53-3fd1-422f-a349-973bb7c5aba9",
+                            Id = "95517511-58e5-4b2f-8c44-c6af3b7b50ae",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "32780f4c-f675-4674-8fd7-4f47eb4c5211",
+                            Id = "64bca3d7-68aa-44ad-9ab9-bd62524a28fe",
                             Name = "applicant",
                             NormalizedName = "applicant"
                         },
                         new
                         {
-                            Id = "cd482092-ec22-4507-b38e-fa5c4cb86355",
+                            Id = "9b53521e-5bfc-4123-af9c-f48555ec887a",
                             Name = "InternshipCordinator",
                             NormalizedName = "InternshipCordinator"
                         },
                         new
                         {
-                            Id = "bc628458-2576-4b80-942f-b4b952315d29",
+                            Id = "f487292f-4115-434c-8757-17d45bc1163b",
                             Name = "organization",
                             NormalizedName = "organization"
                         },
                         new
                         {
-                            Id = "b6442bd5-391c-4e30-a122-d9e904768fde",
+                            Id = "71993d9c-0be0-4666-8d05-0ae51ca6ed3f",
                             Name = "Pending",
                             NormalizedName = "Pending"
                         });

@@ -1,8 +1,12 @@
 ﻿﻿@using Microsoft.AspNetCore.Identity
 @using InternshipDotCom.Models
+@using InternshipDotCom.Controllers
+@using InternshipDotCom.Servieces
+@using System.Security.Claims;
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
@@ -69,6 +73,7 @@
         }
         else if (User.IsInRole("applicant"))
         {
+ 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Applicant
@@ -76,6 +81,10 @@
                 <ul class="dropdown-menu">
 
                     <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Profile</a></li>
+                    <li>
+                        <a class="dropdown-item" href="@Url.Action("ViewApplicationResponses", "Applicants")">Massage <span class="badge bg-danger" id="pendingInterviewContainer"></span></a>
+                    </li>
+
                     <li><hr class="dropdown-divider" /></li>
                     <li>
                         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
@@ -117,3 +126,23 @@
         </li>
     }
 </ul>
+ 
+@{
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch("@Url.Action("GetPendingInterviewsCount", "Applicants")")
+            .then(response => response.json())
+            .then(data => {
+                var pendingInterviewsCount = data;
+                var pendingInterviewContainer = document.getElementById("pendingInterviewContainer");
+                if (pendingInterviewContainer) {
+                    pendingInterviewContainer.innerText = pendingInterviewsCount;
+                }
+            })
+            .catch(error => console.error("Error fetching pending interviews count:", error));
+    });
+</script>
+

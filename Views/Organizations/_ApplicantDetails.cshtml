@@ -94,12 +94,65 @@
         <div class="col-sm-3">
             @if (Model.IsCalledForInterview)
             {
-                <p style="font-weight: bold; color: green;">Called for Interview</p>
+               <p id="call-interview-placeholder" style="font-weight: bold; color: green;">Called for Interview</p>  
             }
             else
             {
-                <button onclick="callForInterview('@Model.ApplicationUser.Id', @Model.InternshipId)">Call for Interview</button>
+               <button id="call-interview-button" onclick="openModal('@Model.ApplicationUser.Id', @Model.InternshipId)">Call for Interview</button>
             }
         </div>
-    </div>
 </div>
+</div>
+
+<script>
+    var now = new Date();
+    var currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var currentTime = now.getHours() * 60 + now.getMinutes();
+
+    var interviewDateStr = '@Model.interviewDate';
+    var interviewDateComponents = interviewDateStr.split('/');
+    var parsedInterviewDate = new Date(
+        parseInt(interviewDateComponents[2]),
+        parseInt(interviewDateComponents[1]) - 1,
+        parseInt(interviewDateComponents[0])
+    );
+
+    var parsedInterviewTime = '@Model.interviewTime'.split(':').map(Number);
+    var interviewDateTime = new Date(parsedInterviewDate.getFullYear(), parsedInterviewDate.getMonth(), parsedInterviewDate.getDate(), parsedInterviewTime[0], parsedInterviewTime[1]);
+
+
+    var timeDifference = (interviewDateTime - now) / (1000 * 60);
+
+
+
+    var buttonElement = document.getElementById('call-interview-placeholder');
+
+    if (timeDifference < -60) {
+        var isInterviewAccepted = @((Model.IsInterviewAccepted ? "true" : "false").ToLower()); 
+        var isInternshipStarted = @((Model.StartedInternship ? "true" : "false").ToLower());
+        var isInternshipFinished = @((Model.FinishedInternship ? "true" : "false").ToLower());
+
+        if (isInterviewAccepted) {
+            buttonElement.innerHTML = '<button id="hire-intern-button" onclick="startInternship(\'@Model.ApplicationUser.Id\', \'@Model.InternshipId\')">Hire this Intern</button>';
+        }
+        else {
+            buttonElement.innerHTML = '<p style="font-weight: bold; color: red;">Interview Passed</p>';
+        }
+        if (isInternshipStarted && timeDifference < -70) {
+            buttonElement.innerHTML = '<button id="finish-internship-button" onclick="finishInternship(\'@Model.ApplicationUser.Id\', \'@Model.InternshipId\')">Finished Internship</button>';
+        }
+        if (isInternshipFinished) {
+            buttonElement.innerHTML = '<p style="font-weight: bold; color: green;">Finished Internship</p>';
+        }
+    }
+
+    else if (timeDifference >= -60 && timeDifference <= 0) {
+        buttonElement.innerHTML = '<button class="btn btn-sm btn-outline-primary" onclick="window.location.href = \'@Model.InterviewLink\'">Start Interview</button>';
+    }
+    else {
+        buttonElement.innerHTML = '<p style="font-weight: bold; color: green;">Interview Coming Soon</p>';
+    }
+</script>
+
+
+

@@ -1,7 +1,7 @@
 ﻿@model List<InternshipDotCom.Models.ApplicantInternship>
 
 @{
-    // Pagination settings
+    
     int pageSize = 5;
     int totalpageCount = Model.Count;
     int totalPages = (int)Math.Ceiling(Model.Count / (double)pageSize);
@@ -168,6 +168,35 @@
         <p class="no-applicants">No students registered for internships posted by this organization.</p>
     }
 </div>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Select Interview Date and Time</h4>
+            </div>
+            <div class="modal-body">
+                <form id="interviewForm">
+                    <div class="form-group">
+                        <label for="interviewDate">Interview Date:</label>
+                        <input type="date" class="form-control" id="interviewDate" required min="<%= DateTime.Now.ToString(" yyyy-MM-dd") %>" />
+                    </div>
+                    <div class="form-group">
+                        <label for="interviewTime">Interview Time:</label>
+                        <input type="time" class="form-control" id="interviewTime" required />
+                    </div>
+                    <br />
+                    <button type="submit" class="btn btn-primary">Schedule Interview</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class=" btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div id="applicant-details-container"></div>
 
 @section Scripts {
@@ -175,6 +204,12 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
+
+        var nowTime = new Date();
+        var currentDate = nowTime.toISOString().split('T')[0];
+        document.getElementById('interviewDate').setAttribute('min', currentDate);
+
+
         function applyFilter() {
             var selectedOrganizationId = $('#organizationFilter').val();
 
@@ -207,16 +242,50 @@
         }
 
 
-        function callForInterview(applicationUserId, internshipId) {
+        function callForInterview(applicationUserId, internshipId, interviewDate, interviewTime) {
+            var now = new Date();
+            var currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            var currentTime = now.getHours() * 60 + now.getMinutes(); // Convert current time to minutes
+
+            // Parse the interview date and time
+            var interviewDateStr = interviewDate;
+            var interviewDateComponents = interviewDateStr.split('/');
+            var parsedInterviewDate = new Date(
+                parseInt(interviewDateComponents[2]),  // Year
+                parseInt(interviewDateComponents[1]) - 1,  // Month (zero-based index)
+                parseInt(interviewDateComponents[0])   // Day
+            );
+
+            var parsedInterviewTime = interviewTime.split(':').map(Number);
+            var interviewDateTime = new Date(parsedInterviewDate.getFullYear(), parsedInterviewDate.getMonth(), parsedInterviewDate.getDate(), parsedInterviewTime[0], parsedInterviewTime[1]);
+
+            // Calculate the time difference in minutes between now and the interview date and time
+            var timeDifference = (interviewDateTime - now) / (1000 * 60);
+
+            // Select the button element
+            var buttonElement = $('#call-interview-button');
+
+          
+            var googleMeetLink = "https://meet.google.com/gti-xdcd-qyp";
             $.ajax({
                 url: '@Url.Action("CallForInterview", "Organizations")',
                 type: 'POST',
-                data: { applicationUserId: applicationUserId, internshipId: internshipId },
+                data: { applicationUserId: applicationUserId, internshipId: internshipId, interviewLink: googleMeetLink, interviewDate: interviewDate, interviewTime: interviewTime },
                 success: function (response) {
                     if (response.success) {
-                        // Optionally, you can update the UI to reflect the change
-                        alert('Applicant called for interview successfully.');
-                        
+                        // Update the button text based on the interview date and time
+                        if (interviewDateTime < -60) {
+                            
+                            buttonElement.replaceWith('<p style="font-weight: bold; color: red;">Interview Passed</p>');
+
+                        } else if ( timeDifference >= -60 && timeDifference <= 0) {
+
+                            buttonElement.replaceWith(' <button class="btn btn-sm btn-outline-primary " onclick="window.location.href = interviewLink">Start Interview</button>');
+
+                        } else {
+                          
+                            buttonElement.replaceWith('<p style="font-weight: bold; color: green;">Interview Coming Soon</p>');
+                        }
                     } else {
                         console.error('Failed to call applicant for interview.');
                     }
@@ -227,6 +296,41 @@
             });
         }
 
+
+        function startInternship(applicationUserId, internshipId) {
+            var buttonElement = $('#hire-intern-button');
+            $.ajax({
+                url: '@Url.Action("startInternship", "Organizations")',
+                type: 'POST',
+                data: { applicationUserId: applicationUserId, internshipId: internshipId },
+                success: function (result) {
+                    buttonElement.replaceWith('<p style="font-weight: bold; color: green;">Hired</p>');
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+
+
+        function finishInternship(applicationUserId, internshipId) {
+
+            var buttonElement = $('#finish-internship-button');
+
+            $.ajax({
+                url: '@Url.Action("finishInternship", "Organizations")',
+                type: 'POST',
+                data: { applicationUserId: applicationUserId, internshipId: internshipId },
+                success: function (result) {
+
+                    buttonElement.replaceWith('<p style="font-weight: bold; color: green;">Finished Internship</p>');
+
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
 
         function displayApplicantDetails() {
             
@@ -263,6 +367,29 @@
                 }
             });
         }
+
+        var ApplicationUserId;
+        var InternshipId;
+
+
+        function openModal(applicationUserId,internshipId) {
+            ApplicationUserId = applicationUserId;
+            InternshipId = internshipId;
+            $('#myModal').modal('show');
+        }
+
+        $('#interviewForm').submit(function (event) {
+            event.preventDefault();
+            var interviewDate = $('#interviewDate').val();
+            var interviewTime = $('#interviewTime').val();
+
+            // Pass the interview date and time to the callForInterview function
+            callForInterview(ApplicationUserId, InternshipId, interviewDate, interviewTime);
+
+            // Close the modal
+            $('#myModal').modal('hide');
+        });
+
     </script>
 }
 

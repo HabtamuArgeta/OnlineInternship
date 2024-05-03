@@ -1,0 +1,48 @@
+﻿/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+}
+
+
+
+/* Hero section styles */
+#hero {
+    background-image: url('hero-bg.jpg');
+    background-size: cover;
+    color: #fff;
+    text-align: center;
+    padding: 100px 0;
+}
+
+    #hero h2 {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    #hero p {
+        font-size: 18px;
+        margin-bottom: 30px;
+    }
+
+.btn {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+/* Add more styles for other sections as needed */
+

@@ -1,0 +1,160 @@
+﻿@model IEnumerable<InternshipDotCom.Models.ApplicantInternship>
+
+@{
+    ViewData["Title"] = "CalledForInterview";
+}
+
+<style>
+    #googleMeetLink {
+        width: 100%;
+        height: 100%;
+    }
+
+    .internship-card {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+        overflow: hidden;
+    }
+
+        .internship-card img {
+            object-fit: cover;
+            width: 99%;
+            height: 180px;
+        }
+
+        .internship-card .card-body {
+            flex: 1;
+            padding: 1.25rem;
+        }
+
+        .internship-card .btn-group {
+            margin-bottom: 0.5rem;
+        }
+</style>
+
+<h2>Internships for Interview Invitation</h2>
+
+@if (!Model.Any())
+{
+    <p>No internships with interview invitations found.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var internship in Model)
+        {
+            <div class="col-lg-4 mb-4">
+                <div class="internship-card shadow-sm">
+                    <img src="@Html.DisplayFor(modelItem => internship.Internship.ImagePath)" class="card-img-top" alt="Internship Image">
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => internship.Internship.InternshipName)</h5>
+                        <p class="card-text">Interview Date: @Html.DisplayFor(modelItem => internship.interviewDate)</p>
+                        @{
+
+                            var interviewTimeHtmlContent =  internship.interviewTime.ToString();
+                            var interviewTimeParts = interviewTimeHtmlContent.Split(':').Select(int.Parse).ToList();
+
+                            // Extract hours, minutes, and seconds from the parts
+                            var hours = interviewTimeParts[0];
+                            var minutes = interviewTimeParts[1];
+                            var seconds = interviewTimeParts[2];
+
+                         
+                            var amPm = hours < 12 ? "AM" : "PM";
+
+                            hours = hours > 12 ? hours - 12 : hours;
+
+                           
+                            var formattedTime = $"{hours}:{minutes}:{seconds} {amPm}";
+                        }
+
+
+                        <p class="card-text">Interview Time: @formattedTime</p>
+                        <p class="card-text">Posted by: @Html.DisplayFor(modelItem => internship.Internship.Organization.OrganizationName)</p>
+                        <div class="row">
+                            <a class="btn btn-sm btn-outline-info col-sm-4" asp-controller="Applicants" asp-action="InternshipDetailsCalledForInterview" asp-route-id="@internship.Internship.Id">Details</a>
+                            
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-7">
+                                <p id="call-interview-placeholder-@internship.Internship.Id" style="font-weight: bold; color: green;"></p>
+                                <script>
+                                    var now = new Date();
+                                    var currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                                    var currentTime = now.getHours() * 60 + now.getMinutes();
+
+                                    var interviewDateStr = "@(internship.interviewDate)";
+                                    var interviewDateComponents = interviewDateStr.split('/');
+                                    var parsedInterviewDate = new Date(
+                                        parseInt(interviewDateComponents[2]),  
+                                        parseInt(interviewDateComponents[1]) - 1,  
+                                        parseInt(interviewDateComponents[0])   
+                                    );
+
+                                    var parsedInterviewTime = "@(internship.interviewTime)".split(':').map(Number);
+                                    var interviewDateTime = new Date(parsedInterviewDate.getFullYear(), parsedInterviewDate.getMonth(), parsedInterviewDate.getDate(), parsedInterviewTime[0], parsedInterviewTime[1]);
+
+                                    var timeDifference = (interviewDateTime - now) / (1000 * 60);
+
+                                    var buttonElement = document.getElementById('call-interview-placeholder-@internship.Internship.Id');
+
+                                    if (timeDifference < -60) {
+                                        var isInterviewAccepted = @((internship.IsInterviewAccepted ? "true" : "false").ToLower());
+                                        var isInternshipStarted = @((internship.StartedInternship ? "true" : "false").ToLower());
+                                        var isInternshipFinished = @((internship.FinishedInternship ? "true" : "false").ToLower());
+                                        if (!isInterviewAccepted) {
+                                            buttonElement.innerHTML = '<p style="font-weight: bold; color: red;">Interview Passed</p>';
+                                        }
+                                        if (isInternshipStarted) {
+                                            buttonElement.innerHTML = '<p style="font-weight: bold; color: green;">On progress...</p>';
+                                        }
+                                        if (isInternshipFinished) {
+                                            buttonElement.innerHTML = '<p style="font-weight: bold; color: green;">Finished</p>';
+                                        }
+
+                                        
+                                    } else if (timeDifference >= -60 && timeDifference <= 0) {
+                                        buttonElement.innerHTML = '<button class="btn btn-sm btn-outline-primary start-interview-btn" data-internship-id="@internship.Internship.Id">Start Interview</button>'; // Correct data attribute format
+                                    } else {
+                                        buttonElement.innerHTML = '<p style="font-weight: bold; color: green;">Coming Soon</p>';
+                                    }
+                                </script>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            $('.start-interview-btn').click(function () {
+                var internshipId = $(this).data('internship-id');
+                $.ajax({
+                    url: '@Url.Action("AcceptInterview", "Applicants")',
+                    type: 'POST',
+                    data: { internshipId: internshipId },
+                    success: function (response) {
+                        if (response.success) {
+                            window.location.href = response.interviewLink;
+                        } else {
+                            console.error('Failed to accept interview invitation.');
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+
+        
+    </script>
+}

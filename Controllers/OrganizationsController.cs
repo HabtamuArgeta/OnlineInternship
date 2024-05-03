@@ -262,7 +262,7 @@ namespace InternshipDotCom.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CallForInterview(string applicationUserId, int internshipId)
+        public async Task<IActionResult> CallForInterview(string applicationUserId, int internshipId, string interviewLink, DateOnly interviewDate, TimeSpan interviewTime)
         {
             var applicant = await _context.ApplicantInternship.FirstOrDefaultAsync(ai => ai.ApplicationUserId == applicationUserId && ai.InternshipId == internshipId);
 
@@ -270,12 +270,57 @@ namespace InternshipDotCom.Controllers
             {
                 return NotFound();
             }
+
+            // Update IsCalledForInterview and InterviewLink properties
             applicant.IsCalledForInterview = true;
+            applicant.interviewTime = interviewTime;
+            applicant.interviewDate = interviewDate;
+            applicant.InterviewLink = interviewLink;
+
             await _context.SaveChangesAsync();
 
-          
             return Json(new { success = true });
         }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> startInternship(string applicationUserId, int internshipId)
+        {
+            var applicant = await _context.ApplicantInternship.FirstOrDefaultAsync(ai => ai.ApplicationUserId == applicationUserId && ai.InternshipId == internshipId);
+
+            if (applicant == null)
+            {
+                return NotFound();
+            }
+
+            applicant.StartedInternship = true;
+            
+
+            await _context.SaveChangesAsync();
+
+            return Json(new { success = true });
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> finishInternship(string applicationUserId, int internshipId)
+        {
+            var applicant = await _context.ApplicantInternship.FirstOrDefaultAsync(ai => ai.ApplicationUserId == applicationUserId && ai.InternshipId == internshipId);
+
+            if (applicant == null)
+            {
+                return NotFound();
+            }
+
+            applicant.FinishedInternship = true;
+
+
+            await _context.SaveChangesAsync();
+
+            return Json(new { success = true });
+        }
+
 
 
         // GET: Organizations/Delete/5
