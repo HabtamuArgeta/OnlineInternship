@@ -64,9 +64,9 @@
             <p>Email: @Model.ApplicationUser.Email</p>
             <p>Phone Number: @Model.ApplicationUser.PhoneNumber</p>
             <p>Internship Name: @(Model.Internship != null ? Model.Internship.InternshipName : "N/A")</p>
-            <p>Department: @Model.Department</p>
-            <p>University: @Model.University</p>
-            <p>Year: @Model.Year</p>
+            <p>Department: @Model.department.Name</p>
+            <p>University: @Model.university.name</p>
+            <p>Year: @Model.YearOfStudy.Year</p>
         </div>
         <div class="col-md-8">
             @if (!string.IsNullOrEmpty(Model.CoverLetter))

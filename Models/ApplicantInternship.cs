@@ -10,9 +10,22 @@ namespace InternshipDotCom.Models
         public ApplicationUser ApplicationUser { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public string? Department { get; set; }
-        public string? University { get; set; }
-        public string? Year { get; set; }
+       
+        [RegularExpression("^[1-9]*$", ErrorMessage = "Select University")]
+        public int UniversityId { get; set; }
+
+        public  University  university {  set; get; }
+
+
+        [RegularExpression("^[1-9]*$", ErrorMessage = "Select Department")]
+        public int DepartmentId { get; set; }
+
+        public Department department { set; get; }
+
+        [RegularExpression("^[1-9]*$", ErrorMessage = "Select Department")]
+        public int YearOfStudyId { get; set; }
+
+        public YearOfStudy YearOfStudy { set; get; }
 
         public string? CoverLetter { get; set; }
         

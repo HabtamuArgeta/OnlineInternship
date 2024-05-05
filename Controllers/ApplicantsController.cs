@@ -203,6 +203,9 @@ namespace InternshipDotCom.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             bool isApplied = await _context.ApplicantInternship.AnyAsync(ai => ai.ApplicationUserId == userId && ai.InternshipId == id && ai.IsApplied);
 
+            
+         
+
             if (internship == null)
             {
                 return NotFound();
@@ -213,18 +216,45 @@ namespace InternshipDotCom.Controllers
                 TempData["successMessage"] = "You have already applied for this internship.";
                 return RedirectToAction("AppliedInternships");
             }
-           
+
             var currentUser = _context.Users.FirstOrDefault(u => u.Id == userId);
- 
+
             ViewBag.FirstName = currentUser.FristName;
             ViewBag.LastName = currentUser.LastName;
             ViewBag.ApplicationUserId = userId;
             ViewBag.InternshipId = id;
 
+            var universities = _context.University.ToList();
+            var universityListItems = universities.Select(u => new SelectListItem
+            {
+                Value = u.id.ToString(), 
+                Text = u.name 
+            }).ToList();     
+            ViewBag.UniversityId = universityListItems;
+
+
+            var departments  = _context.Department.ToList();
+            var departmentsListItems = departments.Select(u => new SelectListItem
+            {
+                Value = u.Id.ToString(), 
+                Text = u.Name 
+            }).ToList();
+            ViewBag.DepartmentId = departmentsListItems;
+
+            var yearOfstudy = _context.YearOfStudy.ToList();
+            var yearOfstudyListItems = yearOfstudy.Select(u => new SelectListItem
+            {
+                Value = u.Id.ToString(),
+                Text = u.Year
+            }).ToList();
+            ViewBag.YearOfStudyId = yearOfstudyListItems;
+
             var applicantInternship = new ApplicantInternship();
 
             return View(applicantInternship);
         }
+
+
 
 
 
@@ -241,9 +271,9 @@ namespace InternshipDotCom.Controllers
 
                     existingApplication.FirstName = applicantInternship.FirstName;
                     existingApplication.LastName = applicantInternship.LastName;
-                    existingApplication.Department = applicantInternship.Department;
-                    existingApplication.University = applicantInternship.University;
-                    existingApplication.Year = applicantInternship.Year;
+                    existingApplication.DepartmentId = applicantInternship.DepartmentId;
+                    existingApplication.UniversityId = applicantInternship.UniversityId;
+                    existingApplication.YearOfStudyId = applicantInternship.YearOfStudyId;
                     existingApplication.CoverLetter = applicantInternship.CoverLetter;
                     existingApplication.IsApplied = true;
 
@@ -271,9 +301,9 @@ namespace InternshipDotCom.Controllers
                     newApplicantInternship.InternshipId = applicantInternship.InternshipId;
                     newApplicantInternship.FirstName = applicantInternship.FirstName;
                     newApplicantInternship.LastName = applicantInternship.LastName;
-                    newApplicantInternship.Department = applicantInternship.Department;
-                    newApplicantInternship.University = applicantInternship.University;
-                    newApplicantInternship.Year = applicantInternship.Year;
+                    newApplicantInternship.DepartmentId = applicantInternship.DepartmentId;
+                    newApplicantInternship.UniversityId = applicantInternship.UniversityId;
+                    newApplicantInternship.YearOfStudyId = applicantInternship.YearOfStudyId;
                     newApplicantInternship.CoverLetter = applicantInternship.CoverLetter;
                     newApplicantInternship.IsApplied = true;
 

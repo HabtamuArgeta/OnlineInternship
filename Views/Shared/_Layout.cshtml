@@ -25,6 +25,39 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                                 
                             </li>
+                            @if (User.IsInRole("admin"))
+                            {
+
+                                <li class="nav-item dropdown ">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        University
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="Universities" asp-action="Index">View</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Universities" asp-action="Create">Add New</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Department
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="Departments" asp-action="Index">View</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Departments" asp-action="Create">Add New</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item dropdown ">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Dep't Coordinator
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="AssignedCoordinators" asp-action="Index">View</a></li>
+                                        <li><a class="dropdown-item" asp-controller="AssignedCoordinators" asp-action="Create">Assign</a></li>
+                                    </ul>
+                                </li>
+                            }
                             @if (User.IsInRole("organization"))
                             {
 
@@ -53,6 +86,14 @@
 
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Applicants" asp-action="SavedInternships">Saved</a>
+                                </li>
+                            }
+
+                            @if (User.IsInRole("InternshipCordinator"))
+                            {
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="ApplicantStatus" asp-action="Index">Applicants</a>
                                 </li>
                             }
                         </ul>

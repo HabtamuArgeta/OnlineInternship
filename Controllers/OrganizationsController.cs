@@ -181,6 +181,10 @@ namespace InternshipDotCom.Controllers
             var applicant = await _context.ApplicantInternship
                 .Include(ai => ai.ApplicationUser)
                 .Include(ai => ai.Internship)
+                .Include(i => i.department) 
+                .Include(ai => ai.Internship)
+                .Include(i => i.university)
+                .Include(i => i.YearOfStudy)
                 .FirstOrDefaultAsync(ai => ai.ApplicationUserId == applicationUserId && ai.InternshipId == internshipId);
 
             if (applicant == null)
@@ -190,6 +194,7 @@ namespace InternshipDotCom.Controllers
 
             return PartialView("_ApplicantDetails", applicant);
         }
+
 
 
 

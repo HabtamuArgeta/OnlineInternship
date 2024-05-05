@@ -1,0 +1,67 @@
+﻿@model InternshipDotCom.Models.ApplicantInternship
+
+<div class="container">
+    <h4>Applicant Details</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <dl class="row">
+                <dt class="col-sm-6">First Name:</dt>
+                <dd class="col-sm-6">@Model.FirstName</dd>
+
+                <dt class="col-sm-6">Last Name:</dt>
+                <dd class="col-sm-6">@Model.LastName</dd>
+
+                <dt class="col-sm-6">Email:</dt>
+                <dd class="col-sm-6">@Model.ApplicationUser.Email</dd>
+
+                <dt class="col-sm-6">University:</dt>
+                <dd class="col-sm-6">@Model.university.name</dd>
+
+                <dt class="col-sm-6">Department:</dt>
+                <dd class="col-sm-6">@Model.department.Name</dd>
+
+                <dt class="col-sm-6">Year of Study:</dt>
+                <dd class="col-sm-6">@Model.YearOfStudy.Year</dd>
+
+                <dt class="col-sm-6">Interview Status:</dt>
+                <dd class="col-sm-6">
+                    @if (@Model.IsCalledForInterview)
+                    {
+                        if (@Model.IsInterviewAccepted)
+                        {
+                            @Html.Raw("Finished") 
+                        }
+                        else
+                        {
+                            @Html.Raw("Not Started") 
+                        }
+                    }
+                    else
+                    {
+                        @Html.Raw("Not Started") 
+                    }
+                </dd>
+
+                <dt class="col-sm-6">Internship Status:</dt>
+                <dd class="col-sm-6">
+                    @if (@Model.StartedInternship)
+                    {
+                        if (@Model.FinishedInternship)
+                        {
+                            @Html.Raw("Finished") 
+                        }
+                        else
+                        {
+                            @Html.Raw("On progress") 
+                        }
+                    }
+                    else
+                    {
+                        @Html.Raw("Not started")
+                    }
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>

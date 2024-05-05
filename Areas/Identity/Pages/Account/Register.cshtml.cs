@@ -208,7 +208,7 @@ namespace InternshipDotCom.Areas.Identity.Pages.Account
                         if (roles.Contains("applicant"))
                         {
                             // Redirect to the applicant dashboard
-                            return RedirectToAction("Index", "Internships");
+                            return RedirectToAction("PostedInternship", "Applicants");
                         }
 
                         else if (roles.Contains("Pending"))

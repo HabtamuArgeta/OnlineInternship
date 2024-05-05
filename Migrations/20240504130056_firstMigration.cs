@@ -59,6 +59,45 @@ namespace InternshipDotCom.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Department",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Department", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "University",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_University", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "YearOfStudy",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Year = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_YearOfStudy", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -187,6 +226,39 @@ namespace InternshipDotCom.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AssignedCoordinator",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UniversityId = table.Column<int>(type: "int", nullable: false),
+                    DepartmentId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssignedCoordinator", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AssignedCoordinator_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AssignedCoordinator_Department_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Department",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AssignedCoordinator_University_UniversityId",
+                        column: x => x.UniversityId,
+                        principalTable: "University",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Internship",
                 columns: table => new
                 {
@@ -221,9 +293,9 @@ namespace InternshipDotCom.Migrations
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Department = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    University = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Year = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UniversityId = table.Column<int>(type: "int", nullable: false),
+                    DepartmentId = table.Column<int>(type: "int", nullable: false),
+                    YearOfStudyId = table.Column<int>(type: "int", nullable: false),
                     CoverLetter = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     InternshipId = table.Column<int>(type: "int", nullable: false),
                     interviewDate = table.Column<DateOnly>(type: "date", nullable: false),
@@ -247,9 +319,27 @@ namespace InternshipDotCom.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
+                        name: "FK_ApplicantInternship_Department_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Department",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_ApplicantInternship_Internship_InternshipId",
                         column: x => x.InternshipId,
                         principalTable: "Internship",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ApplicantInternship_University_UniversityId",
+                        column: x => x.UniversityId,
+                        principalTable: "University",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ApplicantInternship_YearOfStudy_YearOfStudyId",
+                        column: x => x.YearOfStudyId,
+                        principalTable: "YearOfStudy",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -259,11 +349,25 @@ namespace InternshipDotCom.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "64bca3d7-68aa-44ad-9ab9-bd62524a28fe", null, "applicant", "applicant" },
-                    { "71993d9c-0be0-4666-8d05-0ae51ca6ed3f", null, "Pending", "Pending" },
-                    { "95517511-58e5-4b2f-8c44-c6af3b7b50ae", null, "admin", "admin" },
-                    { "9b53521e-5bfc-4123-af9c-f48555ec887a", null, "InternshipCordinator", "InternshipCordinator" },
-                    { "f487292f-4115-434c-8757-17d45bc1163b", null, "organization", "organization" }
+                    { "7acc7475-7896-48d8-af8d-8567dc20ace8", null, "InternshipCordinator", "InternshipCordinator" },
+                    { "891ba653-51cb-491a-9d1d-51bc019a0275", null, "admin", "admin" },
+                    { "9dad15a4-56fb-4666-bf41-9cc225963454", null, "applicant", "applicant" },
+                    { "9e870b7d-14d3-4c4a-8bf4-4f1557015c1f", null, "organization", "organization" },
+                    { "b60d4398-9338-4a88-a546-a8f23891bdb5", null, "Pending", "Pending" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "YearOfStudy",
+                columns: new[] { "Id", "Year" },
+                values: new object[,]
+                {
+                    { 1, "First Year" },
+                    { 2, "Second Year" },
+                    { 3, "Third Year" },
+                    { 4, "Fourth Year" },
+                    { 5, "Fifth Year" },
+                    { 6, "Sixth Year" },
+                    { 7, "Seventh Year" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -272,9 +376,24 @@ namespace InternshipDotCom.Migrations
                 column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ApplicantInternship_DepartmentId",
+                table: "ApplicantInternship",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ApplicantInternship_InternshipId",
                 table: "ApplicantInternship",
                 column: "InternshipId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicantInternship_UniversityId",
+                table: "ApplicantInternship",
+                column: "UniversityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicantInternship_YearOfStudyId",
+                table: "ApplicantInternship",
+                column: "YearOfStudyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -316,6 +435,21 @@ namespace InternshipDotCom.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AssignedCoordinator_ApplicationUserId",
+                table: "AssignedCoordinator",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssignedCoordinator_DepartmentId",
+                table: "AssignedCoordinator",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssignedCoordinator_UniversityId",
+                table: "AssignedCoordinator",
+                column: "UniversityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Internship_OrganizationId",
                 table: "Internship",
                 column: "OrganizationId");
@@ -348,10 +482,22 @@ namespace InternshipDotCom.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "AssignedCoordinator");
+
+            migrationBuilder.DropTable(
                 name: "Internship");
 
             migrationBuilder.DropTable(
+                name: "YearOfStudy");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Department");
+
+            migrationBuilder.DropTable(
+                name: "University");
 
             migrationBuilder.DropTable(
                 name: "Organization");

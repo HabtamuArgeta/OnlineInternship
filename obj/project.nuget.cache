@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "bJiA166NYF9nDG+xt/Ztc35KEiP3R9QY9zWe3czm8Ud3G/RXdAgJoXkAJEdiVazh2cyN19zmXM/848iKEYy1nw==",
+  "dgSpecHash": "0bd6bWWNly45oAaN2dzRvV11a/wm3dc57wcDQPpmSVatRRIiHkm1Xd8Ux0OtTAeMfWYDNX546O6SgIhJm9mZiQ==",
   "success": true,
   "projectFilePath": "C:\\Program Files\\installed apps\\Linux comanned\\crzylearning\\DotNet Apps\\InternshipDotCom\\InternshipDotCom.csproj",
   "expectedPackageFiles": [
@@ -92,12 +92,12 @@
     "C:\\Users\\arget\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.4\\microsoft.entityframeworkcore.8.0.4.nupkg.sha512",
     "C:\\Users\\arget\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.4\\microsoft.entityframeworkcore.abstractions.8.0.4.nupkg.sha512",
     "C:\\Users\\arget\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.4\\microsoft.entityframeworkcore.analyzers.8.0.4.nupkg.sha512",
-    "C:\\Users\\arget\\.nuget\\packages\\microsoft.entityframeworkcore.design\\8.0.3\\microsoft.entityframeworkcore.design.8.0.3.nupkg.sha512",
-    "C:\\Users\\arget\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\8.0.3\\microsoft.entityframeworkcore.relational.8.0.3.nupkg.sha512",
+    "C:\\Users\\arget\\.nuget\\packages\\microsoft.entityframeworkcore.design\\8.0.4\\microsoft.entityframeworkcore.design.8.0.4.nupkg.sha512",
+    "C:\\Users\\arget\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\8.0.4\\microsoft.entityframeworkcore.relational.8.0.4.nupkg.sha512",
     "C:\\Users\\arget\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite\\8.0.3\\microsoft.entityframeworkcore.sqlite.8.0.3.nupkg.sha512",
     "C:\\Users\\arget\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite.core\\8.0.3\\microsoft.entityframeworkcore.sqlite.core.8.0.3.nupkg.sha512",
     "C:\\Users\\arget\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\8.0.3\\microsoft.entityframeworkcore.sqlserver.8.0.3.nupkg.sha512",
-    "C:\\Users\\arget\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\8.0.3\\microsoft.entityframeworkcore.tools.8.0.3.nupkg.sha512",
+    "C:\\Users\\arget\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\8.0.4\\microsoft.entityframeworkcore.tools.8.0.4.nupkg.sha512",
     "C:\\Users\\arget\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\8.0.0\\microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\arget\\.nuget\\packages\\microsoft.extensions.caching.memory\\8.0.0\\microsoft.extensions.caching.memory.8.0.0.nupkg.sha512",
     "C:\\Users\\arget\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
