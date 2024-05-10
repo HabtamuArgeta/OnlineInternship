@@ -1,24 +1,24 @@
 ﻿@model InternshipDotCom.Models.University
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "University Details";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Assuming you have a layout for consistent styling
 }
 
-<h1>Details</h1>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">University Information</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-3">University name:</dt>
+                <dd class="col-sm-9">@Model.name</dd>
+            </dl>
+        </div>
+    </div>
 
-<div>
-    <h4>University</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.name)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="mt-3">
+        <a asp-action="Edit" asp-route-id="@Model?.id" class="btn btn-primary">Edit</a>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
 </div>

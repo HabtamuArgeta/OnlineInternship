@@ -2,61 +2,69 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Assuming you have a layout for consistent styling
 }
 
-<h1>Create</h1>
+<div class="container w-50" >
+    <div class="card">
+        <div class="card-header">
+            <h2 class="text-center">Post Internship</h2>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-<h4>Internship</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="InternshipName" class="control-label"></label>
-                <input asp-for="InternshipName" class="form-control" />
-                <span asp-validation-for="InternshipName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InternshipType" class="control-label"></label>
-                <input asp-for="InternshipType" class="form-control" />
-                <span asp-validation-for="InternshipType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NumberOfApplicant" class="control-label"></label>
-                <input asp-for="NumberOfApplicant" class="form-control" />
-                <span asp-validation-for="NumberOfApplicant" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="OrganizationId" class="control-label">Organization</label>
-                <select asp-for="OrganizationId" class="form-control" asp-items="ViewBag.OrganizationId">
-                    <option value="">--Select Organization--</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" id="formFile">
-              </div>
+                <div class="form-group">
+                    <label asp-for="InternshipName" class="control-label">Internship Name</label>
+                    <input asp-for="InternshipName" class="form-control" />
+                    <span asp-validation-for="InternshipName" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="form-group">
+                    <label asp-for="InternshipType" class="control-label">Internship Type</label>
+                    <input asp-for="InternshipType" class="form-control" />
+                    <span asp-validation-for="InternshipType" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="NumberOfApplicant" class="control-label">Number of Applicants</label>
+                    <input asp-for="NumberOfApplicant" class="form-control" />
+                    <span asp-validation-for="NumberOfApplicant" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Address" class="control-label">Address</label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label">Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="OrganizationId" class="control-label">Organization</label>
+                    <select asp-for="OrganizationId" class="form-control" asp-items="ViewBag.OrganizationId">
+                        <option value="">--Select Organization--</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Image" class="control-label">Image</label>
+                    <input asp-for="Image" class="form-control" type="file" id="formFile">
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Post</button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            <a asp-action="Index" class="btn btn-secondary">Back </a>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

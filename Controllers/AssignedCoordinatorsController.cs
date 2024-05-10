@@ -143,7 +143,7 @@ namespace InternshipDotCom.Controllers
             var coordinators = _context.Users
                 .Where(u => coordinatorUserIds.Contains(u.Id))
                 .ToList();
-            ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "UserName", assignedCoordinator.ApplicationUserId);
+            ViewData["ApplicationUserId"] = new SelectList(coordinators, "Id", "UserName", assignedCoordinator.ApplicationUserId);
             ViewData["DepartmentId"] = new SelectList(_context.Department, "Id", "Name", assignedCoordinator.DepartmentId);
             ViewData["UniversityId"] = new SelectList(_context.University, "id", "name", assignedCoordinator.UniversityId);
             return View(assignedCoordinator);

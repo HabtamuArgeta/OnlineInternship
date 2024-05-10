@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "OfFyqYNjIUZXiFLdlTEJrPD/zPEHJfS7OdZH33xEPgQ=",
+  "Hash": "kR6RMckcZBI24Lh/DQg8QFDVLgCaaXN+KxFfeH1kyAw=",
   "Source": "InternshipDotCom",
   "BasePath": "_content/InternshipDotCom",
   "Mode": "Default",
@@ -129,6 +129,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Files\\Resume\\13e90d08-7042-483c-b336-cb715f7787ef_Habtamu Argeta's cv.pdf"
+    },
+    {
+      "Identity": "C:\\Program Files\\installed apps\\Linux comanned\\crzylearning\\DotNet Apps\\InternshipDotCom\\wwwroot\\Files\\Resume\\290c6625-e47c-4a0f-9d9b-aff02ec38823_Data Structures and Algorithms.pdf",
+      "SourceId": "InternshipDotCom",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Program Files\\installed apps\\Linux comanned\\crzylearning\\DotNet Apps\\InternshipDotCom\\wwwroot\\",
+      "BasePath": "_content/InternshipDotCom",
+      "RelativePath": "Files/Resume/290c6625-e47c-4a0f-9d9b-aff02ec38823_Data Structures and Algorithms.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Files\\Resume\\290c6625-e47c-4a0f-9d9b-aff02ec38823_Data Structures and Algorithms.pdf"
     },
     {
       "Identity": "C:\\Program Files\\installed apps\\Linux comanned\\crzylearning\\DotNet Apps\\InternshipDotCom\\wwwroot\\Files\\Resume\\37ca007b-0350-4282-8ba1-b2e941b66a4d_Zufan Report.pdf",
@@ -319,6 +338,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Files\\Resume\\85be1845-6162-4705-bf68-134a47dc887e_Zufan Report.pdf"
+    },
+    {
+      "Identity": "C:\\Program Files\\installed apps\\Linux comanned\\crzylearning\\DotNet Apps\\InternshipDotCom\\wwwroot\\Files\\Resume\\85c3fcba-6291-41dd-8b4e-4de21aa60dea_Data Structures and Algorithms.pdf",
+      "SourceId": "InternshipDotCom",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Program Files\\installed apps\\Linux comanned\\crzylearning\\DotNet Apps\\InternshipDotCom\\wwwroot\\",
+      "BasePath": "_content/InternshipDotCom",
+      "RelativePath": "Files/Resume/85c3fcba-6291-41dd-8b4e-4de21aa60dea_Data Structures and Algorithms.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Files\\Resume\\85c3fcba-6291-41dd-8b4e-4de21aa60dea_Data Structures and Algorithms.pdf"
     },
     {
       "Identity": "C:\\Program Files\\installed apps\\Linux comanned\\crzylearning\\DotNet Apps\\InternshipDotCom\\wwwroot\\Files\\Resume\\85da88e0-c68a-4133-945f-c595ae1d7f15_Zufan Report.pdf",

@@ -1,33 +1,34 @@
 ﻿@model InternshipDotCom.Models.University
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create University";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Assuming you have a layout for consistent styling
 }
 
-<h1>Create</h1>
-
-<h4>University</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="name" class="control-label"></label>
-                <input asp-for="name" class="form-control" />
-                <span asp-validation-for="name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container w-50">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Add New University</h2>
+        </div>
+        <div class="card-body ">
+            
+         
+            <form asp-action="Create" method="post" class="needs-validation" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="name" class="control-label">University Name</label>
+                    <input asp-for="name" class="form-control" required />
+                    <span asp-validation-for="name" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

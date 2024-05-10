@@ -64,6 +64,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Files\Resume\13e90d08-7042-483c-b336-cb715f7787ef_Habtamu Argeta's cv.pdf))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Files\Resume\290c6625-e47c-4a0f-9d9b-aff02ec38823_Data Structures and Algorithms.pdf))">
+      <SourceType>Package</SourceType>
+      <SourceId>InternshipDotCom</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/InternshipDotCom</BasePath>
+      <RelativePath>Files/Resume/290c6625-e47c-4a0f-9d9b-aff02ec38823_Data Structures and Algorithms.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Files\Resume\290c6625-e47c-4a0f-9d9b-aff02ec38823_Data Structures and Algorithms.pdf))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Files\Resume\37ca007b-0350-4282-8ba1-b2e941b66a4d_Zufan Report.pdf))">
       <SourceType>Package</SourceType>
       <SourceId>InternshipDotCom</SourceId>
@@ -223,6 +239,22 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Files\Resume\85be1845-6162-4705-bf68-134a47dc887e_Zufan Report.pdf))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Files\Resume\85c3fcba-6291-41dd-8b4e-4de21aa60dea_Data Structures and Algorithms.pdf))">
+      <SourceType>Package</SourceType>
+      <SourceId>InternshipDotCom</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/InternshipDotCom</BasePath>
+      <RelativePath>Files/Resume/85c3fcba-6291-41dd-8b4e-4de21aa60dea_Data Structures and Algorithms.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Files\Resume\85c3fcba-6291-41dd-8b4e-4de21aa60dea_Data Structures and Algorithms.pdf))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Files\Resume\85da88e0-c68a-4133-945f-c595ae1d7f15_Zufan Report.pdf))">
       <SourceType>Package</SourceType>

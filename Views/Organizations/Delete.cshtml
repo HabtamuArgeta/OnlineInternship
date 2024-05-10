@@ -2,38 +2,33 @@
 
 @{
     ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Assuming you have a layout for consistent styling
 }
 
-<h1>Delete</h1>
+<div class="container" >
+    <div class="card">
+        <div class="card-header" style="background-color: orangered;">
+            <h2 class="text-center">Delete Companey</h2>
+        </div>
+        <div class="card-body" style="background-color: #ffcccc;">
+            <h3 class="text-center">Are you sure you want to delete this Companey?</h3>
+            <dl class="row">
+                <dt class="col-sm-3">Companey Name</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.OrganizationName)</dd>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Organization</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OrganizationName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OrganizationName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+                <dt class="col-sm-3">Address</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Address)</dd>
+
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Description)</dd>
+            </dl>
+        </div>
+        <div class="card-footer" style="background-color: #ffcccc;">
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-danger">Delete</button> 
+                <a asp-action="Index" class="btn btn-secondary">Back</a>
+            </form>
+        </div>
+    </div>
 </div>

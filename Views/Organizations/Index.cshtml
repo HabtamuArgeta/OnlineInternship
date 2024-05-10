@@ -2,51 +2,45 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Assuming you have a layout for consistent styling
 }
 
-<h1>Index</h1>
+<div class="container">
+    <h1 class="text-center">All Companey</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+    <div class="text-right mb-3">
+        <a asp-action="Create" class="btn btn-primary">Add New</a>
+    </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.OrganizationName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var organization in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => organization.OrganizationName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => organization.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => organization.Description)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@organization.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@organization.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@organization.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Companey Name</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var organization in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => organization.OrganizationName)</td>
+                        <td>@Html.DisplayFor(modelItem => organization.Address)</td>
+                        
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Actions">
+                                <a asp-action="Edit" asp-route-id="@organization.Id" class="btn btn-primary">Edit</a>
+                                <a asp-action="Details" asp-route-id="@organization.Id" class="btn btn-info">Details</a>
+                                <a asp-action="Delete" asp-route-id="@organization.Id" class="btn btn-danger">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 @section Scripts {
     @{

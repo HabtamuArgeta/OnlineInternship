@@ -35,12 +35,14 @@ namespace InternshipDotCom.Controllers
 
             if (coordinator == null)
             {
-                return NotFound();
+                return View("NotAssigned");
             }
 
             // Get the coordinator's department and university IDs
             var coordinatorDepartmentId = coordinator.DepartmentId;
             var coordinatorUniversityId = coordinator.UniversityId;
+
+            
 
             // Query applicants whose department and university match those of the coordinator
             var matchingApplicants = _context.ApplicantInternship

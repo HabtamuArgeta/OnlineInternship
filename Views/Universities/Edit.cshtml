@@ -1,34 +1,37 @@
 ﻿@model InternshipDotCom.Models.University
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit University";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Assuming you have a layout for consistent styling
 }
 
-<h1>Edit</h1>
+<div class="container w-50">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Edit University</h2>
+        </div>
+        <div class="card-body">
+            
+         
+            <form asp-action="Edit" method="post" class="needs-validation" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="id" />
 
-<h4>University</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="id" />
-            <div class="form-group">
-                <label asp-for="name" class="control-label"></label>
-                <input asp-for="name" class="form-control" />
-                <span asp-validation-for="name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="form-group">
+                    <label asp-for="name" class="control-label">University Name:</label>
+                    <input asp-for="name" class="form-control" required />
+                    <div class="invalid-feedback">Please enter the university name.</div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a asp-action="Index" class="btn btn-secondary ml-2">Cancel</a>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

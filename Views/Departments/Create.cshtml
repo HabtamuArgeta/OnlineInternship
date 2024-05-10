@@ -1,33 +1,40 @@
 ﻿@model InternshipDotCom.Models.Department
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Department";
 }
 
-<h1>Create</h1>
 
-<h4>Department</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+
+<div class="container w-50">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Add New Department</h2>
+        </div>
+    <div class="card-body">
+       
+     
+        <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+            <div class="form-group row">
+                <label for="Name" class="col-sm-5 col-form-label">Department Name:</label>
+                <div class="col-sm-7">
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group row">
+                <div class="col-sm-12 offset-sm-2">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                    <a asp-action="Index" class="btn btn-secondary">Back</a>
+                </div>
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
