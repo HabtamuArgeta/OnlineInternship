@@ -15,7 +15,17 @@
         {
 
             var pendingUsers = await UserManager.GetUsersInRoleAsync("Pending");
-           int numberOfPendingUsers = pendingUsers.Count;
+            int numberOfPendingUsers = pendingUsers.Count;
+            string  numberOfPendingUsersVertualized;
+            if (numberOfPendingUsers == 0)
+            {
+                numberOfPendingUsersVertualized = "";
+            }
+            else
+            {
+                numberOfPendingUsersVertualized = numberOfPendingUsers.ToString();
+            }
+
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -24,7 +34,7 @@
                 <ul class="dropdown-menu">
 
                     <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Profile</a></li>
-                    <li><a class="dropdown-item text-dark" asp-area="" asp-controller="UserManagement" asp-action="Index">Approve<span class="badge bg-warning rounded-pill">@numberOfPendingUsers</span></a></li>
+                    <li><a class="dropdown-item text-dark" asp-area="" asp-controller="UserManagement" asp-action="Index">Approve<span class="badge bg-warning rounded-pill">@numberOfPendingUsersVertualized</span></a></li>
                     <li><hr class="dropdown-divider" /></li>
                     <li>
                         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
@@ -139,7 +149,12 @@
                 var pendingInterviewsCount = data;
                 var pendingInterviewContainer = document.getElementById("pendingInterviewContainer");
                 if (pendingInterviewContainer) {
-                    pendingInterviewContainer.innerText = pendingInterviewsCount;
+                    if (pendingInterviewsCount == 0) {
+                        pendingInterviewContainer.innerText = "";
+                    }
+                    else{
+                        pendingInterviewContainer.innerText = pendingInterviewsCount;
+                    }  
                 }
             })
             .catch(error => console.error("Error fetching pending interviews count:", error));

@@ -52,8 +52,6 @@ namespace InternshipDotCom.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid)
-            {
                 var user = await _userManager.FindByEmailAsync(Input.Email);
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {
@@ -77,9 +75,9 @@ namespace InternshipDotCom.Areas.Identity.Pages.Account
                     $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
-            }
+          
 
-            return Page();
+            
         }
     }
 }

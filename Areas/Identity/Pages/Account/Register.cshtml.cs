@@ -140,7 +140,15 @@ namespace InternshipDotCom.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                   var user = new ApplicationUser();
+
+                var existingUser = await _userManager.FindByEmailAsync(Input.Email);
+                if (existingUser != null)
+                {
+                    // If a user with the email exists, add a model error
+                    ModelState.AddModelError(string.Empty, "A user with this email address already exists.");
+                    return Page();
+                }
+                var user = new ApplicationUser();
 
                     user.FristName = Input.FirstName;
                     user.LastName = Input.LastName;

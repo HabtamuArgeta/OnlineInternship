@@ -100,7 +100,7 @@ else
 
                                     var buttonElement = document.getElementById('call-interview-placeholder-@internship.Internship.Id');
 
-                                    if (timeDifference < -60) {
+                                    if (timeDifference < -2) {
                                         var isInterviewAccepted = @((internship.IsInterviewAccepted ? "true" : "false").ToLower());
                                         var isInternshipStarted = @((internship.StartedInternship ? "true" : "false").ToLower());
                                         var isInternshipFinished = @((internship.FinishedInternship ? "true" : "false").ToLower());
@@ -115,9 +115,10 @@ else
                                         }
 
                                         
-                                    } else if (timeDifference >= -60 && timeDifference <= 0) {
+                                    } else if (timeDifference >= -2 && timeDifference <= 0) {
                                         buttonElement.innerHTML = '<button class="btn btn-sm btn-outline-primary start-interview-btn" data-internship-id="@internship.Internship.Id">Start Interview</button>'; // Correct data attribute format
-                                    } else {
+                                    }
+                                   else {
                                         buttonElement.innerHTML = '<p style="font-weight: bold; color: green;">Coming Soon</p>';
                                     }
                                 </script>

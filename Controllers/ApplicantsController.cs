@@ -262,20 +262,20 @@ namespace InternshipDotCom.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ApplyForInternship(ApplicantInternship applicantInternship)
         {
-            
+
             bool internshipExist = await _context.ApplicantInternship.AnyAsync(ai => ai.ApplicationUserId == applicantInternship.ApplicationUserId && ai.InternshipId == applicantInternship.InternshipId);
 
             if (internshipExist)
             {
-                  var existingApplication = await _context.ApplicantInternship.FirstOrDefaultAsync(ai => ai.ApplicationUserId == applicantInternship.ApplicationUserId && ai.InternshipId == applicantInternship.InternshipId);
+                var existingApplication = await _context.ApplicantInternship.FirstOrDefaultAsync(ai => ai.ApplicationUserId == applicantInternship.ApplicationUserId && ai.InternshipId == applicantInternship.InternshipId);
 
-                    existingApplication.FirstName = applicantInternship.FirstName;
-                    existingApplication.LastName = applicantInternship.LastName;
-                    existingApplication.DepartmentId = applicantInternship.DepartmentId;
-                    existingApplication.UniversityId = applicantInternship.UniversityId;
-                    existingApplication.YearOfStudyId = applicantInternship.YearOfStudyId;
-                    existingApplication.CoverLetter = applicantInternship.CoverLetter;
-                    existingApplication.IsApplied = true;
+                existingApplication.FirstName = applicantInternship.FirstName;
+                existingApplication.LastName = applicantInternship.LastName;
+                existingApplication.DepartmentId = applicantInternship.DepartmentId;
+                existingApplication.UniversityId = applicantInternship.UniversityId;
+                existingApplication.YearOfStudyId = applicantInternship.YearOfStudyId;
+                existingApplication.CoverLetter = applicantInternship.CoverLetter;
+                existingApplication.IsApplied = true;
 
                 if (applicantInternship.Resume != null && applicantInternship.Resume.ContentType == "application/pdf")
 
@@ -297,15 +297,15 @@ namespace InternshipDotCom.Controllers
 
                 var newApplicantInternship = new ApplicantInternship();
 
-                    newApplicantInternship.ApplicationUserId = applicantInternship.ApplicationUserId;
-                    newApplicantInternship.InternshipId = applicantInternship.InternshipId;
-                    newApplicantInternship.FirstName = applicantInternship.FirstName;
-                    newApplicantInternship.LastName = applicantInternship.LastName;
-                    newApplicantInternship.DepartmentId = applicantInternship.DepartmentId;
-                    newApplicantInternship.UniversityId = applicantInternship.UniversityId;
-                    newApplicantInternship.YearOfStudyId = applicantInternship.YearOfStudyId;
-                    newApplicantInternship.CoverLetter = applicantInternship.CoverLetter;
-                    newApplicantInternship.IsApplied = true;
+                newApplicantInternship.ApplicationUserId = applicantInternship.ApplicationUserId;
+                newApplicantInternship.InternshipId = applicantInternship.InternshipId;
+                newApplicantInternship.FirstName = applicantInternship.FirstName;
+                newApplicantInternship.LastName = applicantInternship.LastName;
+                newApplicantInternship.DepartmentId = applicantInternship.DepartmentId;
+                newApplicantInternship.UniversityId = applicantInternship.UniversityId;
+                newApplicantInternship.YearOfStudyId = applicantInternship.YearOfStudyId;
+                newApplicantInternship.CoverLetter = applicantInternship.CoverLetter;
+                newApplicantInternship.IsApplied = true;
 
                 if (applicantInternship.Resume != null && applicantInternship.Resume.ContentType == "application/pdf")
 
@@ -325,7 +325,7 @@ namespace InternshipDotCom.Controllers
                 _context.ApplicantInternship.Add(newApplicantInternship);
             }
 
-            
+
             await _context.SaveChangesAsync();
 
             TempData["successMessage"] = "You have Applied this internship succesfully";
@@ -421,6 +421,11 @@ namespace InternshipDotCom.Controllers
             if (existingInternship != null)
             {
                 existingInternship.IsApplied = false;
+                existingInternship.IsCalledForInterview = false;
+                existingInternship.IsInterviewAccepted = false;
+                existingInternship.FinishedInternship = false;
+                existingInternship.interviewDate = null;
+                existingInternship.interviewTime = null;
 
             }
 
@@ -451,7 +456,7 @@ namespace InternshipDotCom.Controllers
             var calledInternships = await _context.ApplicantInternship
                 .Include(ai => ai.Internship)
                     .ThenInclude(i => i.Organization)
-                .Where(ai => ai.ApplicationUserId == userId && ai.IsCalledForInterview)
+                .Where(ai => ai.ApplicationUserId == userId && ai.IsCalledForInterview && ai.IsApplied)
                 .ToListAsync();
 
             return View(calledInternships);

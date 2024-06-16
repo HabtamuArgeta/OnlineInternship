@@ -298,8 +298,8 @@ namespace InternshipDotCom.Migrations
                     YearOfStudyId = table.Column<int>(type: "int", nullable: false),
                     CoverLetter = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     InternshipId = table.Column<int>(type: "int", nullable: false),
-                    interviewDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    interviewTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    interviewDate = table.Column<DateOnly>(type: "date", nullable: true),
+                    interviewTime = table.Column<TimeSpan>(type: "time", nullable: true),
                     InterviewLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsSaved = table.Column<bool>(type: "bit", nullable: false),
                     IsApplied = table.Column<bool>(type: "bit", nullable: false),
@@ -349,11 +349,11 @@ namespace InternshipDotCom.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "7acc7475-7896-48d8-af8d-8567dc20ace8", null, "InternshipCordinator", "InternshipCordinator" },
-                    { "891ba653-51cb-491a-9d1d-51bc019a0275", null, "admin", "admin" },
-                    { "9dad15a4-56fb-4666-bf41-9cc225963454", null, "applicant", "applicant" },
-                    { "9e870b7d-14d3-4c4a-8bf4-4f1557015c1f", null, "organization", "organization" },
-                    { "b60d4398-9338-4a88-a546-a8f23891bdb5", null, "Pending", "Pending" }
+                    { "0a1b7352-a2b5-4518-b26a-68a926ca6f29", null, "InternshipCordinator", "InternshipCordinator" },
+                    { "120c402d-83e0-4fc9-9188-67f69d9fce01", null, "admin", "admin" },
+                    { "2abc4104-1f5b-4908-92f2-0cdbb1526081", null, "organization", "organization" },
+                    { "62b3cae3-51be-4d9d-9b15-df5f10a8d91f", null, "applicant", "applicant" },
+                    { "a8ca3bf5-4f13-4d07-8d4c-ec3531d162fa", null, "Pending", "Pending" }
                 });
 
             migrationBuilder.InsertData(

@@ -274,11 +274,12 @@
                 success: function (response) {
                     if (response.success) {
                         // Update the button text based on the interview date and time
-                        if (interviewDateTime < -60) {
+                        if (timeDifference < -2) {
                             
                             buttonElement.replaceWith('<p style="font-weight: bold; color: red;">Interview Passed</p>');
 
-                        } else if ( timeDifference >= -60 && timeDifference <= 0) {
+                        }
+                        else if (timeDifference >= -2 && timeDifference <= 0) {
 
                             buttonElement.replaceWith(' <button class="btn btn-sm btn-outline-primary " onclick="window.location.href = interviewLink">Start Interview</button>');
 

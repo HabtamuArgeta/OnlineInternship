@@ -34,9 +34,9 @@ namespace InternshipDotCom.Models
         public Internship Internship { get; set; }
 
 
-        public DateOnly interviewDate { get; set; }
+        public DateOnly? interviewDate { get; set; }
 
-        public TimeSpan interviewTime { get; set; }
+        public TimeSpan? interviewTime { get; set; }
 
         public string? InterviewLink { get; set; }
         

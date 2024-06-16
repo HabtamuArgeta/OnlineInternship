@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InternshipDotCom.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240504130056_firstMigration")]
+    [Migration("20240616121430_firstMigration")]
     partial class firstMigration
     {
         /// <inheritdoc />
@@ -82,10 +82,10 @@ namespace InternshipDotCom.Migrations
                     b.Property<int>("YearOfStudyId")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("interviewDate")
+                    b.Property<DateOnly?>("interviewDate")
                         .HasColumnType("date");
 
-                    b.Property<TimeSpan>("interviewTime")
+                    b.Property<TimeSpan?>("interviewTime")
                         .HasColumnType("time");
 
                     b.HasKey("Id");
@@ -411,31 +411,31 @@ namespace InternshipDotCom.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "891ba653-51cb-491a-9d1d-51bc019a0275",
+                            Id = "120c402d-83e0-4fc9-9188-67f69d9fce01",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "9dad15a4-56fb-4666-bf41-9cc225963454",
+                            Id = "62b3cae3-51be-4d9d-9b15-df5f10a8d91f",
                             Name = "applicant",
                             NormalizedName = "applicant"
                         },
                         new
                         {
-                            Id = "7acc7475-7896-48d8-af8d-8567dc20ace8",
+                            Id = "0a1b7352-a2b5-4518-b26a-68a926ca6f29",
                             Name = "InternshipCordinator",
                             NormalizedName = "InternshipCordinator"
                         },
                         new
                         {
-                            Id = "9e870b7d-14d3-4c4a-8bf4-4f1557015c1f",
+                            Id = "2abc4104-1f5b-4908-92f2-0cdbb1526081",
                             Name = "organization",
                             NormalizedName = "organization"
                         },
                         new
                         {
-                            Id = "b60d4398-9338-4a88-a546-a8f23891bdb5",
+                            Id = "a8ca3bf5-4f13-4d07-8d4c-ec3531d162fa",
                             Name = "Pending",
                             NormalizedName = "Pending"
                         });

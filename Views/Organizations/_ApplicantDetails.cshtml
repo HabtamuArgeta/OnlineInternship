@@ -127,7 +127,7 @@
 
     var buttonElement = document.getElementById('call-interview-placeholder');
 
-    if (timeDifference < -60) {
+    if (timeDifference < -2) {
         var isInterviewAccepted = @((Model.IsInterviewAccepted ? "true" : "false").ToLower()); 
         var isInternshipStarted = @((Model.StartedInternship ? "true" : "false").ToLower());
         var isInternshipFinished = @((Model.FinishedInternship ? "true" : "false").ToLower());
@@ -138,7 +138,7 @@
         else {
             buttonElement.innerHTML = '<p style="font-weight: bold; color: red;">Interview Passed</p>';
         }
-        if (isInternshipStarted && timeDifference < -70) {
+        if (isInternshipStarted && timeDifference < -3) {
             buttonElement.innerHTML = '<button id="finish-internship-button" onclick="finishInternship(\'@Model.ApplicationUser.Id\', \'@Model.InternshipId\')">Finished Internship</button>';
         }
         if (isInternshipFinished) {
@@ -146,9 +146,10 @@
         }
     }
 
-    else if (timeDifference >= -60 && timeDifference <= 0) {
+    else if (timeDifference >= -2 && timeDifference <= 0) {
         buttonElement.innerHTML = '<button class="btn btn-sm btn-outline-primary" onclick="window.location.href = \'@Model.InterviewLink\'">Start Interview</button>';
     }
+  
     else {
         buttonElement.innerHTML = '<p style="font-weight: bold; color: green;">Interview Coming Soon</p>';
     }
