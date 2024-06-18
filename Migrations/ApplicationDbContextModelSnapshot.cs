@@ -231,6 +231,13 @@ namespace InternshipDotCom.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Department");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Defoult Department"
+                        });
                 });
 
             modelBuilder.Entity("InternshipDotCom.Models.Internship", b =>
@@ -323,6 +330,13 @@ namespace InternshipDotCom.Migrations
                     b.HasKey("id");
 
                     b.ToTable("University");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            name = "Defoult University"
+                        });
                 });
 
             modelBuilder.Entity("InternshipDotCom.Models.YearOfStudy", b =>
@@ -408,31 +422,31 @@ namespace InternshipDotCom.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "120c402d-83e0-4fc9-9188-67f69d9fce01",
+                            Id = "a095ce0c-1691-4b76-8567-d43a9867fb93",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "62b3cae3-51be-4d9d-9b15-df5f10a8d91f",
+                            Id = "7af08c15-2537-46d4-8d84-36c9b770ca17",
                             Name = "applicant",
                             NormalizedName = "applicant"
                         },
                         new
                         {
-                            Id = "0a1b7352-a2b5-4518-b26a-68a926ca6f29",
+                            Id = "fe6dee6a-8166-4c6f-b35d-bcfae1871567",
                             Name = "InternshipCordinator",
                             NormalizedName = "InternshipCordinator"
                         },
                         new
                         {
-                            Id = "2abc4104-1f5b-4908-92f2-0cdbb1526081",
+                            Id = "6767ef82-29d8-4b5a-8e1b-d7c4024af73f",
                             Name = "organization",
                             NormalizedName = "organization"
                         },
                         new
                         {
-                            Id = "a8ca3bf5-4f13-4d07-8d4c-ec3531d162fa",
+                            Id = "813ba228-5c37-4b6d-96d4-9ed21f23d75c",
                             Name = "Pending",
                             NormalizedName = "Pending"
                         });

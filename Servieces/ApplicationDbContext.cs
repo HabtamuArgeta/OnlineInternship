@@ -43,6 +43,13 @@ namespace InternshipDotCom.Servieces
               new YearOfStudy { Id = 6, Year = "Sixth Year" },
               new YearOfStudy { Id = 7, Year = "Seventh Year" }
     );
+            builder.Entity<Department>().HasData(
+              new Department { Id = 1, Name = "Defoult Department" }
+    );
+            builder.Entity<University>().HasData(
+              new University { id = 1, name = "Defoult University" }
+    );
+
 
         }
         public DbSet<InternshipDotCom.Models.Internship> Internship { get; set; } = default!;

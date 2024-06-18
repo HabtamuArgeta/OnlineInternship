@@ -96,6 +96,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Files\Resume\1849d83a-02e4-458c-9319-fd9d15e29352_Zufan Report.pdf))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Files\Resume\214ba21f-50e9-4ca3-97a0-cb22c9b65fab_Zufan Report.pdf))">
+      <SourceType>Package</SourceType>
+      <SourceId>InternshipDotCom</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/InternshipDotCom</BasePath>
+      <RelativePath>Files/Resume/214ba21f-50e9-4ca3-97a0-cb22c9b65fab_Zufan Report.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Files\Resume\214ba21f-50e9-4ca3-97a0-cb22c9b65fab_Zufan Report.pdf))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Files\Resume\290c6625-e47c-4a0f-9d9b-aff02ec38823_Data Structures and Algorithms.pdf))">
       <SourceType>Package</SourceType>
       <SourceId>InternshipDotCom</SourceId>
@@ -496,6 +512,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Files\Resume\c990cc43-671d-4599-96d3-9a4216a8577b_Zufan Report.pdf))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Files\Resume\e2cec91e-ae60-4f84-9ccd-c3085c94b1fd_Zufan Report.pdf))">
+      <SourceType>Package</SourceType>
+      <SourceId>InternshipDotCom</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/InternshipDotCom</BasePath>
+      <RelativePath>Files/Resume/e2cec91e-ae60-4f84-9ccd-c3085c94b1fd_Zufan Report.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Files\Resume\e2cec91e-ae60-4f84-9ccd-c3085c94b1fd_Zufan Report.pdf))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Files\Resume\e67617b8-7a27-40dc-9831-00f0ce49d167_Habtamu Argeta's cv.pdf))">
       <SourceType>Package</SourceType>
       <SourceId>InternshipDotCom</SourceId>
@@ -639,6 +671,22 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Internships\00e5f162-8fea-463b-8717-c54f0664ff66_photo_2023-11-01_00-58-36.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Internships\03d1fa23-70d8-41e7-b760-47784dd0a485_photo_2023-11-01_02-10-16.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>InternshipDotCom</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/InternshipDotCom</BasePath>
+      <RelativePath>Images/Internships/03d1fa23-70d8-41e7-b760-47784dd0a485_photo_2023-11-01_02-10-16.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Internships\03d1fa23-70d8-41e7-b760-47784dd0a485_photo_2023-11-01_02-10-16.jpg))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Internships\0f736f68-6177-4cc2-8d16-fd2298efd50e_photo_2023-11-01_00-58-36.jpg))">
       <SourceType>Package</SourceType>
@@ -816,6 +864,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Internships\3c3cfb56-75ff-4604-b1d1-63d8d01c0735_photo_2023-11-01_02-10-08.jpg))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Internships\3f286a4f-011d-4a5f-b48f-1ef25cec8827_photo_2023-11-01_00-58-36.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>InternshipDotCom</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/InternshipDotCom</BasePath>
+      <RelativePath>Images/Internships/3f286a4f-011d-4a5f-b48f-1ef25cec8827_photo_2023-11-01_00-58-36.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Internships\3f286a4f-011d-4a5f-b48f-1ef25cec8827_photo_2023-11-01_00-58-36.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Internships\50323f1d-bc48-4bad-9d13-e8bcb0aa43b5_photo_2023-11-01_02-10-08.jpg))">
       <SourceType>Package</SourceType>
       <SourceId>InternshipDotCom</SourceId>
@@ -831,6 +895,22 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Internships\50323f1d-bc48-4bad-9d13-e8bcb0aa43b5_photo_2023-11-01_02-10-08.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Internships\50cc6f85-4e12-442f-8ebb-d729064da4a8_photo_2023-11-01_00-58-36.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>InternshipDotCom</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/InternshipDotCom</BasePath>
+      <RelativePath>Images/Internships/50cc6f85-4e12-442f-8ebb-d729064da4a8_photo_2023-11-01_00-58-36.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Internships\50cc6f85-4e12-442f-8ebb-d729064da4a8_photo_2023-11-01_00-58-36.jpg))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Internships\584dc3ce-cbcc-4fcb-8c80-c750b1e17359_React and wordpress developer.png))">
       <SourceType>Package</SourceType>
@@ -1167,6 +1247,54 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Internships\ec6bad1d-0a22-40c3-9a02-f27f5b36e8af_photo_2023-11-01_02-10-16.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Testimonias\IMG_20230821_153045_395.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>InternshipDotCom</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/InternshipDotCom</BasePath>
+      <RelativePath>Images/Testimonias/IMG_20230821_153045_395.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Testimonias\IMG_20230821_153045_395.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Testimonias\IMG_20230828_092434_201.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>InternshipDotCom</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/InternshipDotCom</BasePath>
+      <RelativePath>Images/Testimonias/IMG_20230828_092434_201.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Testimonias\IMG_20230828_092434_201.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Testimonias\IMG_20230903_124142_649.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>InternshipDotCom</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/InternshipDotCom</BasePath>
+      <RelativePath>Images/Testimonias/IMG_20230903_124142_649.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Testimonias\IMG_20230903_124142_649.jpg))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Testimonias\photo_2024-03-01_20-09-08.jpg))">
       <SourceType>Package</SourceType>

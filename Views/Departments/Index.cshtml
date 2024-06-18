@@ -4,10 +4,10 @@
     ViewData["Title"] = "Departments";
 }
 
-<h1 class="text-center"> Added Departments</h1>
+<h1 class="text-center">Added Departments</h1>
 
 <p>
-    <a class="btn btn-primary" asp-action="Create">Create New Department</a>
+    <a class="btn btn-primary" asp-action="Create">Add New Department</a>
 </p>
 
 <div class="table-responsive">
@@ -21,10 +21,14 @@
         <tbody>
             @foreach (var item in Model)
             {
+                if (item.Id == 1)
+                {
+                    continue; // Skip the department with Id = 1
+                }
+
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.Name)</td>
                     <td>
-                        
                         <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">
                             <i class="fas fa-edit"></i> Edit
                         </a>
@@ -32,13 +36,9 @@
                         <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">
                             <i class="fas fa-trash-alt"></i> Delete
                         </a>
-
-                       
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-
-

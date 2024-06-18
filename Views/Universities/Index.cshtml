@@ -21,6 +21,11 @@
         <tbody>
             @foreach (var university in Model)
             {
+                if (university.id == 1)
+                {
+                    continue; // Skip the department with Id = 1
+                }
+                
                 <tr>
                     <td>@university.name</td>
                     <td>

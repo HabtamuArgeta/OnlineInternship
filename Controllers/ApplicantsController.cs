@@ -224,7 +224,9 @@ namespace InternshipDotCom.Controllers
             ViewBag.ApplicationUserId = userId;
             ViewBag.InternshipId = id;
 
-            var universities = _context.University.ToList();
+            var universities = _context.University
+                .Where(u => u.id != 1)
+                .ToList();
             var universityListItems = universities.Select(u => new SelectListItem
             {
                 Value = u.id.ToString(), 
@@ -233,13 +235,18 @@ namespace InternshipDotCom.Controllers
             ViewBag.UniversityId = universityListItems;
 
 
-            var departments  = _context.Department.ToList();
+            var departments = _context.Department
+               .Where(d => d.Id != 1)
+               .ToList();
+
             var departmentsListItems = departments.Select(u => new SelectListItem
             {
-                Value = u.Id.ToString(), 
-                Text = u.Name 
+                Value = u.Id.ToString(),
+                Text = u.Name
             }).ToList();
+
             ViewBag.DepartmentId = departmentsListItems;
+
 
             var yearOfstudy = _context.YearOfStudy.ToList();
             var yearOfstudyListItems = yearOfstudy.Select(u => new SelectListItem
@@ -365,6 +372,9 @@ namespace InternshipDotCom.Controllers
                 {
                     ApplicationUserId = applicationUserId,
                     InternshipId = id,
+                    UniversityId = 1,
+                    DepartmentId = 1,   
+                    YearOfStudyId = 1,
                     IsSaved = true
                 };
                 _context.ApplicantInternship.Add(applicantInternship);
